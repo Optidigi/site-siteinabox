@@ -68,60 +68,167 @@ const { title, description, ogImage, noindex } = Astro.props;
       })();
     </script>
 
-    <!-- Pre-bootstrap click buffer: captures clicks on Bootstrap data-api widgets
-         (mobile nav toggler, FAQ accordion, pricing tabs) BEFORE bootstrap.bundle
-         parses, then replays them once it's ready. Without this, deferring the
-         vendor stack drops the first user interaction. Tooltips fire on hover/focus
-         and don't need buffering. -->
+    <!-- Vanilla replacements for Bootstrap Collapse + Tab. Attaches at HTML
+         parse time (no waiting for deferred scripts) — no click-buffer needed.
+         Matches Bootstrap-bundle's data-api semantics including height
+         animation (.collapsing → .collapse.show), data-bs-parent
+         single-open accordion behavior, and `.fade.show.active` tab classes. -->
     <script is:inline>
       (function () {
-        var pending = [];
-        var EARLY = '[data-bs-toggle="collapse"], [data-bs-toggle="tab"]';
-        var early = function (e) {
-          var btn = e.target.closest(EARLY);
-          if (!btn) return;
-          if (window.bootstrap && bootstrap.Collapse) return;
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          pending.push(btn);
-        };
-        document.addEventListener('click', early, true);
-        function flush() {
-          if (!window.bootstrap || !bootstrap.Collapse) return setTimeout(flush, 30);
-          document.removeEventListener('click', early, true);
-          pending.forEach(function (btn) {
-            var type = btn.getAttribute('data-bs-toggle');
-            var sel = btn.getAttribute('data-bs-target') || btn.getAttribute('href');
-            var el = sel && document.querySelector(sel);
-            try {
-              if (type === 'collapse' && el) bootstrap.Collapse.getOrCreateInstance(el).toggle();
-              else if (type === 'tab') bootstrap.Tab.getOrCreateInstance(btn).show();
-            } catch (_) { /* swallow */ }
-          });
-          pending.length = 0;
+        // ---------- Collapse (mobile nav + FAQ accordion) ----------
+        function onTransitionEnd(el, cb) {
+          var done = function (e) {
+            if (e && e.target !== el) return; // ignore bubbled events from children
+            el.removeEventListener('transitionend', done);
+            clearTimeout(fallback);
+            cb();
+          };
+          // Fallback in case transitionend doesn't fire (scrollHeight=0 etc.)
+          var fallback = setTimeout(function () { done(); }, 400);
+          el.addEventListener('transitionend', done);
         }
-        if (document.readyState === 'loading')
-          document.addEventListener('DOMContentLoaded', flush);
-        else flush();
+        function expand(el) {
+          el.classList.remove('collapse');
+          el.classList.add('collapsing');
+          el.style.height = '0px';
+          // Two rAFs guarantee a paint between the initial height and the
+          // target height, so the browser actually runs the CSS transition.
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              onTransitionEnd(el, function () {
+                el.classList.remove('collapsing');
+                el.classList.add('collapse', 'show');
+                el.style.height = '';
+              });
+              el.style.height = el.scrollHeight + 'px';
+            });
+          });
+        }
+        function collapseEl(el) {
+          el.style.height = el.scrollHeight + 'px';
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              el.classList.remove('collapse', 'show');
+              el.classList.add('collapsing');
+              onTransitionEnd(el, function () {
+                el.classList.remove('collapsing');
+                el.classList.add('collapse');
+                el.style.height = '';
+              });
+              el.style.height = '0px';
+            });
+          });
+        }
+        function findSiblings(el) {
+          // data-bs-parent="#id" enables single-open accordion semantics
+          var pSel = el.getAttribute('data-bs-parent');
+          if (!pSel) return [];
+          var parent = document.querySelector(pSel);
+          if (!parent) return [];
+          return Array.prototype.slice.call(
+            parent.querySelectorAll('.accordion-collapse.show')
+          ).filter(function (other) { return other !== el; });
+        }
+        function buttonsFor(el) {
+          // All toggle buttons pointing at this collapse element
+          return document.querySelectorAll(
+            '[data-bs-toggle="collapse"][data-bs-target="#' + el.id + '"], ' +
+            '[data-bs-toggle="collapse"][href="#' + el.id + '"]'
+          );
+        }
+        function syncButtonState(el, open) {
+          buttonsFor(el).forEach(function (btn) {
+            btn.setAttribute('aria-expanded', String(open));
+            btn.classList.toggle('collapsed', !open);
+          });
+        }
+
+        // ---------- Tab (pricing M/J) ----------
+        function showTab(btn) {
+          var sel = btn.getAttribute('data-bs-target') || btn.getAttribute('href');
+          var pane = sel && document.querySelector(sel);
+          if (!pane) return;
+          // Find sibling tabs (in same .nav-tabs / .nav) and sibling panes (in same .tab-content)
+          var tablist = btn.closest('[role="tablist"]') || btn.closest('.nav-tabs') || btn.closest('.nav');
+          var paneParent = pane.closest('.tab-content') || pane.parentElement;
+          if (tablist) {
+            tablist.querySelectorAll('[data-bs-toggle="tab"], .nav-link').forEach(function (t) {
+              t.classList.remove('active');
+              t.setAttribute('aria-selected', 'false');
+            });
+          }
+          if (paneParent) {
+            paneParent.querySelectorAll('.tab-pane').forEach(function (p) {
+              p.classList.remove('show', 'active');
+            });
+          }
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          pane.classList.add('show', 'active');
+        }
+
+        document.addEventListener('click', function (e) {
+          var collapseBtn = e.target.closest('[data-bs-toggle="collapse"]');
+          if (collapseBtn) {
+            e.preventDefault();
+            var sel = collapseBtn.getAttribute('data-bs-target') || collapseBtn.getAttribute('href');
+            var el = sel && document.querySelector(sel);
+            if (!el) return;
+            var isOpen = el.classList.contains('show');
+            if (isOpen) {
+              collapseEl(el);
+              syncButtonState(el, false);
+            } else {
+              // Single-open accordion: close siblings first
+              findSiblings(el).forEach(function (other) {
+                collapseEl(other);
+                syncButtonState(other, false);
+              });
+              expand(el);
+              syncButtonState(el, true);
+            }
+            return;
+          }
+          var tabBtn = e.target.closest('[data-bs-toggle="tab"]');
+          if (tabBtn) {
+            e.preventDefault();
+            showTab(tabBtn);
+          }
+        });
       })();
     </script>
 
-    <!-- Vendor JS — matches the original Piku theme stack for full visual parity.
-         All deferred to keep them off the critical render path; document order is
-         preserved (jQuery first, then Bootstrap → WOW → Slick → theme.js which inits
-         Slick + WOW). The click buffer above bridges the pre-load window. -->
+    <!-- Vendor JS — only what's still required (jQuery for Slick, Slick for
+         the testimonial carousel, Lottie player for the hero rocket).
+         Bootstrap-bundle was dropped: collapse + tab are handled in the inline
+         script above, tooltips are pure CSS (siab-overrides.css).
+         WOW + theme.js were dropped earlier this commit. -->
     <script is:inline defer src="/legacy/assets/vendor/jquery.min.js"></script>
-    <script is:inline defer src="/legacy/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script is:inline defer src="/legacy/assets/vendor/wow/wow.min.js"></script>
     <script is:inline defer src="/legacy/assets/vendor/slick/slick.min.js"></script>
     <script is:inline defer src="/legacy/assets/vendor/lottie-player.min.js"></script>
 
-    <!-- Theme behavior (sticky nav, Slick init, WOW init, etc.) -->
-    <script is:inline defer src="/legacy/assets/js/theme.js"></script>
-
-    <!-- Bootstrap tooltip init, reduced-motion Lottie, slick aria-hidden-focus fix -->
+    <!-- Slick init + reduced-motion Lottie + slick aria-hidden-focus fix -->
     <script is:inline>
       window.addEventListener('load', function () {
+        if (window.jQuery && window.jQuery.fn.slick) {
+          window.jQuery('.feedback-slider-six').slick({
+            dots: false,
+            arrows: true,
+            prevArrow: window.jQuery('.prev_b'),
+            nextArrow: window.jQuery('.next_b'),
+            lazyLoad: 'ondemand',
+            centerPadding: '0px',
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            centerMode: true,
+            autoplay: true,
+            autoplaySpeed: 10000,
+            responsive: [
+              { breakpoint: 768, settings: { slidesToShow: 2 } },
+              { breakpoint: 576, settings: { slidesToShow: 1 } },
+            ],
+          });
+        }
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           document.querySelectorAll('lottie-player').forEach(function (el) {
             el.removeAttribute('autoplay');
@@ -129,15 +236,6 @@ const { title, description, ogImage, noindex } = Astro.props;
             if (typeof el.stop === 'function') el.stop();
           });
         }
-        if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
-          document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
-            new bootstrap.Tooltip(el);
-          });
-        }
-        // Slick sets aria-hidden=true on out-of-view slides (including real,
-        // non-cloned ones) but leaves tabindex="0" → axe critical
-        // (aria-hidden-focus). Strip tabindex from every aria-hidden slide
-        // both at init and after each slide change.
         var stripSlickTabindex = function () {
           document.querySelectorAll('[data-slick-index][aria-hidden="true"]').forEach(function (el) {
             el.setAttribute('tabindex', '-1');

@@ -12,3 +12,62 @@
 .theme-main-menu.menu-overlay {
   position: fixed !important;
 }
+
+/* CSS-only tooltip for .siab-info-trigger (replaces Bootstrap Tooltip / Popper).
+   Reads the `data-tooltip` attribute. Tooltip text is also mirrored into
+   `aria-label` on the trigger so screen readers get the content. */
+.siab-info-trigger {
+  position: relative;
+}
+.siab-info-trigger::before,
+.siab-info-trigger::after {
+  position: absolute;
+  left: 50%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
+  z-index: 1080;
+}
+.siab-info-trigger::after {
+  content: attr(data-tooltip);
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  background: #1d1d1f;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  font-family: 'Chivo', sans-serif;
+  font-weight: 400;
+  max-width: 240px;
+  width: max-content;
+  white-space: normal;
+  text-align: left;
+  letter-spacing: normal;
+}
+.siab-info-trigger::before {
+  content: '';
+  bottom: calc(100% + 4px);
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1d1d1f;
+  width: 0;
+  height: 0;
+  padding: 0;
+}
+.siab-info-trigger:hover::before,
+.siab-info-trigger:hover::after,
+.siab-info-trigger:focus-visible::before,
+.siab-info-trigger:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+}
+@media (prefers-reduced-motion: reduce) {
+  .siab-info-trigger::before,
+  .siab-info-trigger::after { transition: none; }
+}
+
+/* Hide the legacy Bootstrap-tooltip wrapper rules from earlier siab-overrides;
+   they're harmless but unused after the CSS replacement above. */
