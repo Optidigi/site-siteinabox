@@ -50,13 +50,50 @@ const { title, description, ogImage, noindex } = Astro.props;
       <slot />
     </div>
 
+    <!-- Pre-bootstrap click buffer: captures clicks on Bootstrap data-api widgets
+         (mobile nav toggler, FAQ accordion, pricing tabs) BEFORE bootstrap.bundle
+         parses, then replays them once it's ready. Without this, deferring the
+         vendor stack drops the first user interaction. Tooltips fire on hover/focus
+         and don't need buffering. -->
+    <script is:inline>
+      (function () {
+        var pending = [];
+        var EARLY = '[data-bs-toggle="collapse"], [data-bs-toggle="tab"]';
+        var early = function (e) {
+          var btn = e.target.closest(EARLY);
+          if (!btn) return;
+          if (window.bootstrap && bootstrap.Collapse) return;
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          pending.push(btn);
+        };
+        document.addEventListener('click', early, true);
+        function flush() {
+          if (!window.bootstrap || !bootstrap.Collapse) return setTimeout(flush, 30);
+          document.removeEventListener('click', early, true);
+          pending.forEach(function (btn) {
+            var type = btn.getAttribute('data-bs-toggle');
+            var sel = btn.getAttribute('data-bs-target') || btn.getAttribute('href');
+            var el = sel && document.querySelector(sel);
+            try {
+              if (type === 'collapse' && el) bootstrap.Collapse.getOrCreateInstance(el).toggle();
+              else if (type === 'tab') bootstrap.Tab.getOrCreateInstance(btn).show();
+            } catch (_) { /* swallow */ }
+          });
+          pending.length = 0;
+        }
+        if (document.readyState === 'loading')
+          document.addEventListener('DOMContentLoaded', flush);
+        else flush();
+      })();
+    </script>
+
     <!-- Vendor JS — matches the original Piku theme stack for full visual parity.
-         jQuery + Bootstrap load synchronously so the navbar toggler / tabs / accordion /
-         tooltip data-api works on first paint (deferring them caused a race where the
-         first click on the hamburger was dropped). The heavier scripts below stay
-         deferred to keep them off the critical render path; document order is preserved. -->
-    <script is:inline src="/legacy/assets/vendor/jquery.min.js"></script>
-    <script is:inline src="/legacy/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+         All deferred to keep them off the critical render path; document order is
+         preserved (jQuery first, then Bootstrap → WOW → Slick → theme.js which inits
+         Slick + WOW). The click buffer above bridges the pre-load window. -->
+    <script is:inline defer src="/legacy/assets/vendor/jquery.min.js"></script>
+    <script is:inline defer src="/legacy/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script is:inline defer src="/legacy/assets/vendor/wow/wow.min.js"></script>
     <script is:inline defer src="/legacy/assets/vendor/slick/slick.min.js"></script>
     <script is:inline defer src="/legacy/assets/vendor/lottie-player.min.js"></script>
