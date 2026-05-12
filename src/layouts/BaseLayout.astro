@@ -50,6 +50,24 @@ const { title, description, ogImage, noindex } = Astro.props;
       <slot />
     </div>
 
+    <!-- Sticky header (.theme-main-menu.sticky-menu → .fixed past 180px scroll).
+         Inlined so the scroll listener is wired up before the user can possibly
+         scroll past the threshold — defers theme.js late-binding leaves a window
+         where the .fixed class is applied late, making the background-fade
+         transition start mid-scroll instead of at the trigger point. -->
+    <script is:inline>
+      (function () {
+        var menu = document.querySelector('.sticky-menu');
+        if (!menu) return;
+        var onScroll = function () {
+          if (window.scrollY >= 180) menu.classList.add('fixed');
+          else menu.classList.remove('fixed');
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
+    </script>
+
     <!-- Pre-bootstrap click buffer: captures clicks on Bootstrap data-api widgets
          (mobile nav toggler, FAQ accordion, pricing tabs) BEFORE bootstrap.bundle
          parses, then replays them once it's ready. Without this, deferring the
