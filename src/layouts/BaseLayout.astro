@@ -85,31 +85,47 @@ const { title, description, ogImage, noindex } = Astro.props;
       })();
     </script>
 
-    <!-- Vanilla replacements for Bootstrap Collapse + Tab. Attaches at HTML
-         parse time (no waiting for deferred scripts) — no click-buffer needed.
-         Matches Bootstrap-bundle's data-api semantics including height
-         animation (.collapsing → .collapse.show), data-bs-parent
-         single-open accordion behavior, and `.fade.show.active` tab classes. -->
+    <!-- Vanilla replacements for Bootstrap Collapse + Tab — replicates the
+         exact Bootstrap-bundle data-api ordering and timing so visuals match
+         the original. Mobile nav + FAQ accordion use the collapse pattern;
+         pricing M/J use the tab pattern. -->
     <script is:inline>
       (function () {
-        // ---------- Collapse (mobile nav + FAQ accordion) ----------
+        // ---- Collapse (mobile nav + FAQ accordion) ----
+        // Bootstrap's pattern: set start-state inline + add .collapsing in
+        // the same tick, then set the end-state inline. Browser computes
+        // height transition between the two paints. No rAF gap needed.
+
         function onTransitionEnd(el, cb) {
           var done = function (e) {
-            if (e && e.target !== el) return; // ignore bubbled events from children
+            if (e && e.target !== el) return;       // ignore bubbled children
             el.removeEventListener('transitionend', done);
             clearTimeout(fallback);
             cb();
           };
-          // Fallback in case transitionend doesn't fire (scrollHeight=0 etc.)
-          var fallback = setTimeout(function () { done(); }, 400);
+          var fallback = setTimeout(done, 400);     // matches CSS .35s + slack
           el.addEventListener('transitionend', done);
         }
+
+        // The mobile navbar's siab-overrides CSS uses `transform: translate(-100%)`
+        // for a slide-in/out animation — not Bootstrap's default height pattern.
+        // Detect that case and just toggle `.show`; CSS handles the rest.
+        // FAQ accordion (`.accordion-collapse`) keeps the height-collapse pattern.
+        function isTransformAnimated(el) {
+          return el.classList.contains('navbar-collapse');
+        }
+
         function expand(el) {
+          if (isTransformAnimated(el)) {
+            el.classList.add('show');               // CSS handles the slide-in
+            return;
+          }
+          el.style.height = '0px';                  // start-state inline
           el.classList.remove('collapse');
           el.classList.add('collapsing');
-          el.style.height = '0px';
-          // Two rAFs guarantee a paint between the initial height and the
-          // target height, so the browser actually runs the CSS transition.
+          // Double-rAF to make sure the browser paints with height:0 before
+          // we change to scrollHeight — otherwise the two style writes get
+          // coalesced into a single computed style and no transition runs.
           requestAnimationFrame(function () {
             requestAnimationFrame(function () {
               onTransitionEnd(el, function () {
@@ -121,8 +137,13 @@ const { title, description, ogImage, noindex } = Astro.props;
             });
           });
         }
+
         function collapseEl(el) {
-          el.style.height = el.scrollHeight + 'px';
+          if (isTransformAnimated(el)) {
+            el.classList.remove('show');            // CSS handles the slide-out
+            return;
+          }
+          el.style.height = el.getBoundingClientRect().height + 'px';  // lock current
           requestAnimationFrame(function () {
             requestAnimationFrame(function () {
               el.classList.remove('collapse', 'show');
@@ -136,23 +157,24 @@ const { title, description, ogImage, noindex } = Astro.props;
             });
           });
         }
-        function findSiblings(el) {
-          // data-bs-parent="#id" enables single-open accordion semantics
+
+        function findOpenSiblings(el) {
           var pSel = el.getAttribute('data-bs-parent');
           if (!pSel) return [];
           var parent = document.querySelector(pSel);
           if (!parent) return [];
           return Array.prototype.slice.call(
             parent.querySelectorAll('.accordion-collapse.show')
-          ).filter(function (other) { return other !== el; });
+          ).filter(function (o) { return o !== el; });
         }
+
         function buttonsFor(el) {
-          // All toggle buttons pointing at this collapse element
           return document.querySelectorAll(
             '[data-bs-toggle="collapse"][data-bs-target="#' + el.id + '"], ' +
             '[data-bs-toggle="collapse"][href="#' + el.id + '"]'
           );
         }
+
         function syncButtonState(el, open) {
           buttonsFor(el).forEach(function (btn) {
             btn.setAttribute('aria-expanded', String(open));
@@ -160,15 +182,19 @@ const { title, description, ogImage, noindex } = Astro.props;
           });
         }
 
-        // ---------- Tab (pricing M/J) — replicates Bootstrap Tab's two-step
-        // fade-out → swap → fade-in (150ms each) so the cross-fade matches. ----------
+        // ---- Tab (pricing M/J) — mirrors Bootstrap Tab's exact ordering:
+        //   1. Outgoing .show removed → opacity fade-out via .fade (150ms)
+        //   2. On transitionend: outgoing .active removed (display:none)
+        //   3. Incoming .active added (display:block, opacity:0)
+        //   4. Sync reflow so the swap commits
+        //   5. Incoming .show added → opacity fade-in (150ms)
         function showTab(btn) {
           var sel = btn.getAttribute('data-bs-target') || btn.getAttribute('href');
           var pane = sel && document.querySelector(sel);
           if (!pane) return;
+
+          // Nav-link state — synchronous, Bootstrap does this immediately
           var tablist = btn.closest('[role="tablist"]') || btn.closest('.nav-tabs') || btn.closest('.nav');
-          var paneParent = pane.closest('.tab-content') || pane.parentElement;
-          // Toggle nav-link state immediately (matches Bootstrap)
           if (tablist) {
             tablist.querySelectorAll('[data-bs-toggle="tab"], .nav-link').forEach(function (t) {
               t.classList.remove('active');
@@ -177,32 +203,32 @@ const { title, description, ogImage, noindex } = Astro.props;
           }
           btn.classList.add('active');
           btn.setAttribute('aria-selected', 'true');
+
+          var paneParent = pane.closest('.tab-content') || pane.parentElement;
           if (!paneParent) return;
           var current = paneParent.querySelector('.tab-pane.show.active');
-          var doSwap = function () {
-            paneParent.querySelectorAll('.tab-pane').forEach(function (p) {
-              if (p !== pane) p.classList.remove('show', 'active');
-            });
-            pane.classList.add('active');
-            // rAF so .active (display:block) takes effect with opacity:0 before .show triggers transition
-            requestAnimationFrame(function () {
-              requestAnimationFrame(function () {
-                pane.classList.add('show');
-              });
-            });
+          if (current === pane) return;
+
+          var revealIncoming = function () {
+            if (current) current.classList.remove('active');   // display:none on outgoing
+            pane.classList.add('active');                       // display:block, opacity:0
+            pane.offsetHeight;                                  // sync reflow before .show
+            pane.classList.add('show');                         // opacity 0→1
           };
-          if (current && current !== pane) {
-            // fade-out current first (opacity .15s linear via .fade.show → .fade)
+
+          if (current) {
+            // Fade-out outgoing first
             current.classList.remove('show');
-            var afterFade = function () {
+            var afterFade = function (e) {
+              if (e && e.target !== current) return;
               current.removeEventListener('transitionend', afterFade);
               clearTimeout(safety);
-              doSwap();
+              revealIncoming();
             };
-            var safety = setTimeout(afterFade, 200);
+            var safety = setTimeout(function () { afterFade(); }, 200);
             current.addEventListener('transitionend', afterFade);
           } else {
-            doSwap();
+            revealIncoming();
           }
         }
 
@@ -213,13 +239,11 @@ const { title, description, ogImage, noindex } = Astro.props;
             var sel = collapseBtn.getAttribute('data-bs-target') || collapseBtn.getAttribute('href');
             var el = sel && document.querySelector(sel);
             if (!el) return;
-            var isOpen = el.classList.contains('show');
-            if (isOpen) {
+            if (el.classList.contains('show')) {
               collapseEl(el);
               syncButtonState(el, false);
             } else {
-              // Single-open accordion: close siblings first
-              findSiblings(el).forEach(function (other) {
+              findOpenSiblings(el).forEach(function (other) {
                 collapseEl(other);
                 syncButtonState(other, false);
               });
