@@ -182,18 +182,17 @@ const { title, description, ogImage, noindex } = Astro.props;
           });
         }
 
-        // ---- Tab (pricing M/J) — mirrors Bootstrap Tab's exact ordering:
-        //   1. Outgoing .show removed → opacity fade-out via .fade (150ms)
-        //   2. On transitionend: outgoing .active removed (display:none)
-        //   3. Incoming .active added (display:block, opacity:0)
-        //   4. Sync reflow so the swap commits
-        //   5. Incoming .show added → opacity fade-in (150ms)
+        // ---- Tab (pricing M/J) — bit-exact replication of Bootstrap Tab:
+        //   t=0:    `.active` swapped instantly (outgoing→display:none, incoming→display:block opacity:0)
+        //   t=0-150ms: blank gap (Bootstrap's _queueCallback waits 1× transition duration)
+        //   t=150ms: `.show` removed from outgoing (no-op visually since hidden) and added to incoming
+        //   t=150-300ms: incoming opacity transitions 0→1
         function showTab(btn) {
           var sel = btn.getAttribute('data-bs-target') || btn.getAttribute('href');
           var pane = sel && document.querySelector(sel);
           if (!pane) return;
 
-          // Nav-link state — synchronous, Bootstrap does this immediately
+          // Nav-link state — synchronous, like Bootstrap
           var tablist = btn.closest('[role="tablist"]') || btn.closest('.nav-tabs') || btn.closest('.nav');
           if (tablist) {
             tablist.querySelectorAll('[data-bs-toggle="tab"], .nav-link').forEach(function (t) {
@@ -209,27 +208,18 @@ const { title, description, ogImage, noindex } = Astro.props;
           var current = paneParent.querySelector('.tab-pane.show.active');
           if (current === pane) return;
 
-          var revealIncoming = function () {
-            if (current) current.classList.remove('active');   // display:none on outgoing
-            pane.classList.add('active');                       // display:block, opacity:0
-            pane.offsetHeight;                                  // sync reflow before .show
-            pane.classList.add('show');                         // opacity 0→1
-          };
+          // Phase 1 — INSTANT swap of `.active`:
+          //   outgoing loses .active → display:none (still has .show, but invisible)
+          //   incoming gains .active → display:block (opacity:0 since no .show yet)
+          if (current) current.classList.remove('active');
+          pane.classList.add('active');
 
-          if (current) {
-            // Fade-out outgoing first
-            current.classList.remove('show');
-            var afterFade = function (e) {
-              if (e && e.target !== current) return;
-              current.removeEventListener('transitionend', afterFade);
-              clearTimeout(safety);
-              revealIncoming();
-            };
-            var safety = setTimeout(function () { afterFade(); }, 200);
-            current.addEventListener('transitionend', afterFade);
-          } else {
-            revealIncoming();
-          }
+          // Phase 2 — after the fade duration (Bootstrap waits the transition out,
+          // even though nothing visible happens during this window), swap `.show`.
+          setTimeout(function () {
+            if (current) current.classList.remove('show');   // no-op visually
+            pane.classList.add('show');                       // opacity 0→1 over 150ms
+          }, 150);
         }
 
         document.addEventListener('click', function (e) {
