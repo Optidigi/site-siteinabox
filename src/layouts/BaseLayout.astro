@@ -1,0 +1,101 @@
+---
+import '../styles/global.css';
+import Seo from '../components/seo/Seo.astro';
+import JsonLdOrganization from '../components/seo/JsonLdOrganization.astro';
+import JsonLdLocalBusiness from '../components/seo/JsonLdLocalBusiness.astro';
+import { site } from '../content/site';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { title, description, ogImage, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#481938" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="generator" content={Astro.generator} />
+    <Seo title={title} description={description} ogImage={ogImage} noindex={noindex} />
+    <JsonLdOrganization />
+    <JsonLdLocalBusiness />
+
+    <!-- Legacy Piku theme stylesheets (preserved for visual fidelity) -->
+    <link rel="stylesheet" href="/legacy/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/legacy/assets/css/style.css" />
+    <link rel="stylesheet" href="/legacy/assets/css/responsive.css" />
+    <link rel="stylesheet" href="/legacy/assets/css/siab-overrides.css" />
+
+    <!-- Trimmed Google Fonts: only the families actually rendered by .font-test-familjen + .font-Playfair -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;900&family=Familjen+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    />
+  </head>
+  <body class="font-test-familjen">
+    <div class="main-page-wrapper">
+      <slot />
+    </div>
+
+    <!-- Vendor JS — matches the original Piku theme stack for full visual parity.
+         jQuery + Bootstrap load synchronously so the navbar toggler / tabs / accordion /
+         tooltip data-api works on first paint (deferring them caused a race where the
+         first click on the hamburger was dropped). The heavier scripts below stay
+         deferred to keep them off the critical render path; document order is preserved. -->
+    <script is:inline src="/legacy/assets/vendor/jquery.min.js"></script>
+    <script is:inline src="/legacy/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script is:inline defer src="/legacy/assets/vendor/wow/wow.min.js"></script>
+    <script is:inline defer src="/legacy/assets/vendor/slick/slick.min.js"></script>
+    <script is:inline defer src="/legacy/assets/vendor/lottie-player.min.js"></script>
+
+    <!-- Theme behavior (sticky nav, Slick init, WOW init, etc.) -->
+    <script is:inline defer src="/legacy/assets/js/theme.js"></script>
+
+    <!-- Bootstrap tooltip init, reduced-motion Lottie, slick aria-hidden-focus fix -->
+    <script is:inline>
+      window.addEventListener('load', function () {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.querySelectorAll('lottie-player').forEach(function (el) {
+            el.removeAttribute('autoplay');
+            el.removeAttribute('loop');
+            if (typeof el.stop === 'function') el.stop();
+          });
+        }
+        if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+          document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+            new bootstrap.Tooltip(el);
+          });
+        }
+        // Slick sets aria-hidden=true on out-of-view slides (including real,
+        // non-cloned ones) but leaves tabindex="0" → axe critical
+        // (aria-hidden-focus). Strip tabindex from every aria-hidden slide
+        // both at init and after each slide change.
+        var stripSlickTabindex = function () {
+          document.querySelectorAll('[data-slick-index][aria-hidden="true"]').forEach(function (el) {
+            el.setAttribute('tabindex', '-1');
+            el.querySelectorAll('[tabindex]').forEach(function (child) {
+              child.setAttribute('tabindex', '-1');
+            });
+          });
+        };
+        stripSlickTabindex();
+        if (window.jQuery) {
+          window.jQuery('.feedback-slider-six').on('afterChange setPosition', stripSlickTabindex);
+        }
+      });
+    </script>
+  </body>
+</html>

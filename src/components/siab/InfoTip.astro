@@ -1,0 +1,10 @@
+---
+interface Props {
+  title: string;
+  label?: string;
+}
+const { title, label = 'Meer info' } = Astro.props;
+---
+<button type="button" class="siab-info-trigger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover focus" title={title} aria-label={label}>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+</button>

@@ -1,0 +1,1701 @@
+/* =============================================================================
+ * siab-overrides.css
+ * Scoped overrides for the Site in a Box landing page (siab.php).
+ * All rules MUST be prefixed with .siab-page to avoid affecting other demo pages.
+ * ============================================================================= */
+
+/* === Font pairing tests (used by index-9-2.php) ============================
+ * Two variants are defined below. Switch by changing the <body> class:
+ *   - .font-test-bricolage  → Option B (Bricolage + Figtree, UX-agent pick)
+ *   - .font-test-archivo    → Option A (Bricolage + Archivo + Hanken Grotesk,
+ *                                       frontend-agent pick — currently active)
+ * Both inherit the page's existing font-weights — no extrabold. The hero
+ * heading's 800 override from style.css is reset to 500 to match the general
+ * h-rule (font-weight: 500 in style.css line 1652). */
+
+/* --- Option B: Bricolage + Figtree --- */
+.font-test-bricolage {
+  font-family: 'Figtree', system-ui, -apple-system, sans-serif;
+}
+.font-test-bricolage h1,
+.font-test-bricolage h2,
+.font-test-bricolage h3,
+.font-test-bricolage h4,
+.font-test-bricolage h5,
+.font-test-bricolage h6 {
+  font-family: 'Bricolage Grotesque', Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+.font-test-bricolage .hero-banner-nine .hero-heading {
+  font-weight: 500;
+}
+.font-test-bricolage .btn-eighteen,
+.font-test-bricolage .btn-eleven {
+  font-family: 'Figtree', sans-serif;
+}
+
+/* --- Option A: Bricolage (hero) + Archivo (sections) + Hanken Grotesk (body) ---
+ * Bricolage stays as the consensus pick for the hero. Archivo (Omnibus-Type,
+ * 19th-century American grotesque heritage) replaces the Fraunces register for
+ * sections — closer to the Big Stage logo's industrial signage character.
+ * Hanken Grotesk (signage-design heritage, optimized for small-text legibility)
+ * carries body copy. */
+.font-test-archivo {
+  font-family: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+}
+.font-test-archivo h2,
+.font-test-archivo h3,
+.font-test-archivo h4,
+.font-test-archivo h5,
+.font-test-archivo h6 {
+  font-family: 'Archivo', sans-serif;
+  letter-spacing: -0.005em;
+}
+.font-test-archivo .hero-heading {
+  font-family: 'Bricolage Grotesque', Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+.font-test-archivo .hero-banner-nine .hero-heading {
+  font-weight: 500;
+}
+.font-test-archivo .btn-eighteen,
+.font-test-archivo .btn-eleven {
+  font-family: 'Archivo', sans-serif;
+}
+
+/* --- Option C: Satoshi single-font system (the pro move) ---
+ * One quiet humanist grotesque for everything — no competing display font.
+ * Big Stage stays the only loud typographic moment. Satoshi (Indian Type
+ * Foundry, Fontshare, OFL) has just enough subtle character to feel
+ * intentional without fighting the wordmark. Existing weights preserved. */
+.font-test-satoshi {
+  font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+}
+.font-test-satoshi h1,
+.font-test-satoshi h2,
+.font-test-satoshi h3,
+.font-test-satoshi h4,
+.font-test-satoshi h5,
+.font-test-satoshi h6 {
+  font-family: 'Satoshi', sans-serif;
+  letter-spacing: -0.015em;
+}
+.font-test-satoshi .hero-banner-nine .hero-heading {
+  font-weight: 500;
+}
+.font-test-satoshi .btn-eighteen,
+.font-test-satoshi .btn-eleven {
+  font-family: 'Satoshi', sans-serif;
+}
+
+/* --- Option D: Zilla Slab (headings) + Satoshi (body) — slab-serif companion ---
+ * Documented industrial-wordmark pattern: heavy display + slab serif headline
+ * + clean sans body. Same logic as Filson (Knockout + Trade Gothic), REI
+ * (Sentinel + Whitney), Hoefler & Co.'s canonical Knockout pairing. Zilla
+ * Slab is Mozilla's brand font (Typotheque, OFL via Google Fonts) — provides
+ * serif contrast against Big Stage's stencil cuts without competing for
+ * "loudest font". Existing weights preserved. */
+.font-test-zilla {
+  font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+}
+.font-test-zilla h1,
+.font-test-zilla h2,
+.font-test-zilla h3,
+.font-test-zilla h4,
+.font-test-zilla h5,
+.font-test-zilla h6 {
+  font-family: 'Zilla Slab', Georgia, serif;
+  letter-spacing: -0.005em;
+}
+.font-test-zilla .hero-banner-nine .hero-heading {
+  font-weight: 500;
+}
+.font-test-zilla .btn-eighteen,
+.font-test-zilla .btn-eleven {
+  font-family: 'Satoshi', sans-serif;
+}
+
+
+/* --- Option E: Familjen Grotesk (headings) + Chivo (body) — Stockholm ink-trap ---
+ * Familjen Grotesk (Familjen STHLM AB, OFL via Google Fonts) carries visible
+ * ink traps at headline sizes — subtle industrial tension that resonates with
+ * Big Stage's stencil cuts without competing for "loudest font". Chivo
+ * (Omnibus-Type, OFL) provides newsprint-calibrated body grotesque. Both
+ * outside the AI-default set. Existing weights preserved. */
+.font-test-familjen {
+  font-family: 'Chivo', system-ui, -apple-system, sans-serif;
+}
+.font-test-familjen h1,
+.font-test-familjen h2,
+.font-test-familjen h3,
+.font-test-familjen h4,
+.font-test-familjen h5,
+.font-test-familjen h6 {
+  font-family: 'Familjen Grotesk', sans-serif;
+  letter-spacing: -0.01em;
+}
+.font-test-familjen .hero-banner-nine .hero-heading {
+  font-weight: 500;
+  text-wrap: balance;
+}
+.font-test-familjen .btn-eighteen,
+.font-test-familjen .btn-eleven {
+  font-family: 'Chivo', sans-serif;
+  font-weight: 700;
+}
+
+
+/* --- Option F: Spectral (headings) + Epilogue (body) — editorial serif ---
+ * Spectral (Production Type, OFL via Google Fonts) is a transitional serif
+ * designed for screens — Dutch-friendly diacritics, calmer than Fraunces,
+ * outside the AI-default set. Epilogue (Etcetera Type Co. / Tyler Finck,
+ * OFL) is a quietly geometric sans with low template-library exposure.
+ * Existing weights preserved. */
+.font-test-spectral {
+  font-family: 'Epilogue', system-ui, -apple-system, sans-serif;
+}
+.font-test-spectral h1,
+.font-test-spectral h2,
+.font-test-spectral h3,
+.font-test-spectral h4,
+.font-test-spectral h5,
+.font-test-spectral h6 {
+  font-family: 'Spectral', Georgia, serif;
+  letter-spacing: -0.005em;
+}
+.font-test-spectral .hero-banner-nine .hero-heading {
+  font-weight: 500;
+}
+.font-test-spectral .btn-eighteen,
+.font-test-spectral .btn-eleven {
+  font-family: 'Epilogue', sans-serif;
+}
+
+
+/* --- Option G: IBM Plex Serif (headings) + IBM Plex Sans (body) — IBM ---
+ * IBM Plex (IBM, OFL via Google Fonts) — designed in-house at IBM by Mike
+ * Abbink with Bold Monday. Distinctive industrial provenance: it carries the
+ * "thinking machine" lineage rather than the startup-cheerful one. Slab-ish
+ * serifs with mechanical character; companion sans tuned for code/UI. Both
+ * outside the AI-default set. Existing weights preserved. */
+.font-test-plex {
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+}
+.font-test-plex h1,
+.font-test-plex h2,
+.font-test-plex h3,
+.font-test-plex h4,
+.font-test-plex h5,
+.font-test-plex h6 {
+  font-family: 'IBM Plex Serif', Georgia, serif;
+  letter-spacing: -0.01em;
+}
+.font-test-plex .hero-banner-nine .hero-heading {
+  font-weight: 500;
+}
+.font-test-plex .btn-eighteen,
+.font-test-plex .btn-eleven {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+
+/* === Typography ============================================================ */
+.siab-page {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+.siab-page h1,
+.siab-page h2,
+.siab-page .hero-heading,
+.siab-page .title-eleven h2,
+.siab-page .feedback-section-nine h2,
+.siab-page .faq-section-three h2,
+.siab-page .pricing-section-six h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 50, "WONK" 0;
+  letter-spacing: -0.01em;
+}
+.siab-page .hero-heading {
+  font-weight: 700;
+  font-variation-settings: "SOFT" 60, "WONK" 1;
+  letter-spacing: -0.02em;
+}
+.siab-page h2,
+.siab-page .title-eleven h2 {
+  font-weight: 600;
+}
+.siab-page h3,
+.siab-page h4,
+.siab-page h5,
+.siab-page h6,
+.siab-page .card-style-eleven h4,
+.siab-page .card-style-twelve h4,
+.siab-page .pr-column .plane-name,
+.siab-page .pr-column .plan-tagline,
+.siab-page .pr-column .price {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+.siab-page p,
+.siab-page li,
+.siab-page .nav-link,
+.siab-page .accordion-button,
+.siab-page .accordion-body p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.siab-page .btn-eighteen,
+.siab-page .btn-eleven {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+/* === Hero (centered Pattern B with index-3 media block) =================== */
+.siab-page .hero-banner-nine {
+  overflow: hidden; /* clips Memphis shapes that flank the hero */
+}
+.siab-page .hero-banner-nine .hero-heading {
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.siab-page .hero-banner-nine .hero-sub {
+  max-width: 640px;
+  margin-inline: auto;
+  line-height: 1.55;
+}
+.siab-page .hero-banner-nine .hero-secondary-link {
+  font-weight: 500;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity .2s ease;
+}
+.siab-page .hero-banner-nine .hero-secondary-link:hover {
+  opacity: .65;
+}
+.siab-page .hero-banner-nine .hero-trust-row {
+  gap: 18px 32px;
+  font-size: 15px;
+  color: #1a1a1a;
+  opacity: .85;
+}
+.siab-page .hero-banner-nine .hero-trust-row li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.siab-page .hero-banner-nine .hero-trust-row svg {
+  flex: 0 0 16px;
+  color: #2a8a4f;
+}
+.siab-page .hero-banner-nine .hero-price-line {
+  opacity: .8;
+}
+
+/* Hero media — laptop scene + floating cards */
+.siab-page .hero-banner-nine .hero-media {
+  position: relative;
+}
+.siab-page .hero-banner-nine .hero-media > div {
+  width: 100%;
+  max-width: 880px;
+}
+.siab-page .hero-banner-nine .hero-media > div > img:first-child {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.siab-page .hero-banner-nine .hero-card-01 {
+  position: absolute;
+  right: -4%;
+  bottom: -10%;
+  z-index: 1;
+  max-width: 22%;
+  animation: jumpThree 5s infinite linear;
+  will-change: transform;
+}
+.siab-page .hero-banner-nine .hero-card-02 {
+  position: absolute;
+  left: -4%;
+  bottom: -8%;
+  z-index: 1;
+  max-width: 22%;
+  animation: jumpTwo 5s infinite linear;
+  will-change: transform;
+}
+
+/* Decorative Memphis shapes flanking the hero */
+.siab-page .hero-banner-nine .hero-shape-01 {
+  position: absolute;
+  right: 0;
+  top: 14%;
+  max-width: 11%;
+  z-index: 0;
+  pointer-events: none;
+}
+.siab-page .hero-banner-nine .hero-shape-02 {
+  position: absolute;
+  left: 0;
+  top: 13%;
+  max-width: 11%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .siab-page .hero-banner-nine .hero-card-01,
+  .siab-page .hero-banner-nine .hero-card-02 {
+    animation: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .siab-page .hero-banner-nine .hero-shape-01,
+  .siab-page .hero-banner-nine .hero-shape-02 {
+    display: none;
+  }
+  .siab-page .hero-banner-nine .hero-card-01,
+  .siab-page .hero-banner-nine .hero-card-02 {
+    max-width: 26%;
+  }
+}
+
+@media (max-width: 575px) {
+  .siab-page .hero-banner-nine .hero-trust-row {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .siab-page .hero-banner-nine .hero-cta-group {
+    flex-direction: column;
+  }
+  .siab-page .hero-banner-nine .btn-eighteen {
+    width: 100%;
+    text-align: center;
+  }
+  .siab-page .hero-banner-nine .hero-card-01,
+  .siab-page .hero-banner-nine .hero-card-02 {
+    display: none;
+  }
+}
+
+/* === Final CTA banner — half over deep-purple feedback section ============ */
+.siab-page .siab-cta-banner {
+  margin-top: -60px; /* lifts cream banner up over the purple section above */
+  position: relative;
+  z-index: 2;
+}
+/* Override the inherited .fancy-banner-ten .wrapper rules from style.css
+   (they were calibrated for a video-button + headline layout we don't use) */
+.siab-page .siab-cta-banner .wrapper {
+  background: #FEF3F4;
+  border-radius: 28px;
+  padding: 60px 56px;
+  box-shadow: 0 24px 60px rgba(72, 25, 56, 0.2);
+}
+.siab-page .siab-cta-banner .wrapper h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+@media (max-width: 991px) {
+  .siab-page .siab-cta-banner {
+    margin-top: -40px;
+  }
+  .siab-page .siab-cta-banner .wrapper {
+    padding: 40px 32px;
+    border-radius: 20px;
+  }
+}
+/* When testimonials are gated off (no purple section above), reset the
+   negative margin so the banner sits cleanly between pricing and FAQ. */
+.siab-page.no-testimonials .siab-cta-banner {
+  margin-top: 100px;
+}
+.siab-page.no-testimonials .siab-cta-banner .wrapper {
+  box-shadow: 0 12px 40px rgba(72, 25, 56, 0.08);
+}
+@media (max-width: 991px) {
+  .siab-page.no-testimonials .siab-cta-banner {
+    margin-top: 60px;
+  }
+}
+
+
+/* =============================================================================
+ * Neo-brutalist pass — scoped to .font-test-familjen on index-9-2.php
+ * Scale: radius=0 everywhere except interior icon discs / play buttons /
+ * avatars; borders=2px black; shadows=hard offset, single direction (down-
+ * right), no blur, no rgba; signature move is the press-down hover.
+ * ============================================================================= */
+
+/* --- Primary CTA: hard-shadow stamp + press-down hover ------------------- */
+.font-test-familjen .btn-eighteen {
+  border-radius: 0;
+  border: 2px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.font-test-familjen .btn-eighteen:hover {
+  background: #F5E900;
+  color: #000;
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 #000;
+}
+.font-test-familjen .btn-eighteen:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 #000;
+}
+
+/* --- Pricing tier columns: square + hard offset, popular = stamp (not flood) -- */
+.font-test-familjen .pricing-section-six .pr-column {
+  border-radius: 0;
+  border: 2px solid #000;
+  box-shadow: 6px 6px 0 #000;
+}
+.font-test-familjen .pricing-section-six .pr-column.pr-column-recommended {
+  border-width: 2px;
+  box-shadow: 10px 10px 0 #000;
+  background: #FFFFFF;
+  position: relative;
+}
+.font-test-familjen .pricing-section-six .pr-column.pr-column-recommended::after {
+  content: "POPULAIR";
+  position: absolute;
+  top: -16px;
+  right: 24px;
+  background: #FFD80B;
+  color: #000;
+  border: 2px solid #000;
+  padding: 6px 14px;
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  box-shadow: 3px 3px 0 #000;
+  z-index: 2;
+}
+
+/* --- Pricing CTA inside tier card: match the system --------------------- */
+.font-test-familjen .pricing-section-six .pr-column .btn-eleven {
+  border-radius: 0;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.font-test-familjen .pricing-section-six .pr-column .btn-eleven:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+.font-test-familjen .pricing-section-six .pr-column .btn-eleven:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 #000;
+}
+
+/* --- Pricing nav (monthly/yearly toggle): stereo-button mechanical switch ----
+ * The base CSS gives the wrapper a black bg + 50px radius — neutralise it so
+ * inactive tabs read white-on-cream (the bug user saw was that both tabs were
+ * white-on-black and indistinguishable). Inactive = raised, active = pressed.
+ */
+.font-test-familjen .pricing-nav-four .nav-tabs {
+  background: transparent;
+  border: 2px solid #000;
+  border-radius: 0;
+  padding: 0;
+  gap: 0;
+  display: inline-flex;
+}
+.font-test-familjen .pricing-nav-four .nav-link {
+  background: #FFFFFF;
+  color: #000;
+  border: 0;
+  border-right: 2px solid #000;
+  border-radius: 0;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  min-width: 160px;
+  min-height: 44px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  transform: translate(0, -3px);
+  box-shadow: 0 3px 0 #000;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
+}
+.font-test-familjen .pricing-nav-four .nav-link:last-child {
+  border-right: 0;
+}
+.font-test-familjen .pricing-nav-four .nav-link.active {
+  background: #000;
+  color: #FFFFFF;
+  transform: translate(0, 0);
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.45);
+}
+.font-test-familjen .pricing-nav-four .nav-link:not(.active):hover {
+  transform: translate(0, -1px);
+  box-shadow: 0 1px 0 #000;
+}
+
+/* --- FAQ rebuild: cream container, per-row white cards, yellow open fill --- */
+.font-test-familjen .faq-section-three .accordion-style-two {
+  border-radius: 0;
+  background: #FEF3F4;
+  border: 2px solid #000;
+  box-shadow: 6px 6px 0 #000;
+  padding: 0;
+}
+.font-test-familjen .faq-section-three .accordion-style-two .accordion-item {
+  border: none;
+  border-bottom: 2px solid #000;
+  border-radius: 0;
+  background: #fff;
+  margin: 0;
+}
+.font-test-familjen .faq-section-three .accordion-style-two .accordion-item:last-child {
+  border-bottom: none;
+}
+/* --- FAQ typographic rebalance ----------------------------------------
+ * Prior inversion: answer body p had .fs-22 utility (22px) bigger than the
+ * 18px question button. Answer line-height (1.78) compounded the dominance.
+ * Question font wasn't explicitly Familjen Grotesk so it inherited the
+ * accordion's default. Fix: lift question to 19px/800/FG, demote answer to
+ * 16px Chivo at 0.75 alpha, and override .fs-22 with !important. Padding
+ * symmetric open/closed to eliminate layout jump on toggle. */
+.font-test-familjen .faq-section-three .accordion-button {
+  border-radius: 0;
+  background: #fff;
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: #000;
+  padding: 20px 24px;
+  border: none;
+  box-shadow: none;
+}
+.font-test-familjen .faq-section-three .accordion-button:not(.collapsed) {
+  background: #FFD80B;
+  color: #000;
+  font-weight: 800;
+  font-size: 19px;
+  padding: 20px 24px;
+  box-shadow: none;
+}
+.font-test-familjen .faq-section-three .accordion-button:not(.collapsed)::after {
+  filter: brightness(0);
+}
+/* The theme's `+`/`-` chevron is text content at 36px font-size. With the
+   button now at 19px font-size + line-height 1.35, the chevron's intrinsic
+   height differs from the text line. Force the chevron onto the button's
+   own line-height + use align-self: center so it sits on the visual middle
+   of the question text regardless of font-size mismatch. */
+.font-test-familjen .faq-section-three .accordion-button::after {
+  align-self: center;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.font-test-familjen .faq-section-three .accordion-body {
+  background: #fff;
+  padding: 14px 24px 22px;
+  border-top: 2px solid #000;
+}
+.font-test-familjen .faq-section-three .accordion-body p,
+.font-test-familjen .faq-section-three .accordion-body .fs-22 {
+  font-family: 'Chivo', sans-serif;
+  font-size: 16px !important;
+  font-weight: 400;
+  line-height: 1.65 !important;
+  color: rgba(0, 0, 0, 0.75);
+  letter-spacing: 0;
+  margin-bottom: 0;
+}
+@media (max-width: 575px) {
+  .font-test-familjen .faq-section-three .accordion-button,
+  .font-test-familjen .faq-section-three .accordion-button:not(.collapsed) {
+    font-size: 17px;
+    padding: 16px 20px;
+  }
+  .font-test-familjen .faq-section-three .accordion-body {
+    padding: 12px 20px 18px;
+  }
+  .font-test-familjen .faq-section-three .accordion-body p,
+  .font-test-familjen .faq-section-three .accordion-body .fs-22 {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* --- Trust-triad: square + hard offset, original cyan/orange/green icons - */
+.font-test-familjen .block-feature-twentyFour .card-style-eleven {
+  border-radius: 0;
+  border: 2px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  background: #FFFFFF;
+}
+.font-test-familjen .block-feature-twentyFour .card-style-eleven .card-icon-circle {
+  border: 2px solid #000;
+}
+
+/* --- Three explainers under pricing (.card-style-twelve): kept flat ------
+ * Boxing these creates a fourth-in-a-row card grid (after trust triad +
+ * pricing pair). The parent .border-top.border-bottom.border-dark.border-2
+ * Bootstrap wrapper already signals "this is a zone" — per-card boxes would
+ * over-elevate one-line explainer content to pricing-tier weight.
+ */
+.font-test-familjen .card-style-twelve {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* --- Final CTA banner (cream panel over purple): hard offset ------------ */
+.font-test-familjen .siab-cta-banner .wrapper {
+  border-radius: 0;
+  border: 2px solid #000;
+  box-shadow: 8px 8px 0 #000;
+}
+.font-test-familjen.no-testimonials .siab-cta-banner .wrapper {
+  box-shadow: 8px 8px 0 #000;
+}
+
+/* --- Testimonials cards on deep purple: square + white border ----------- */
+.font-test-familjen .feedback-section-nine .feedback-block {
+  border-radius: 0;
+  border: 2px solid #FFFFFF;
+}
+.font-test-familjen .feedback-section-nine .slider-arrows li {
+  border-radius: 0;
+}
+.font-test-familjen .feedback-section-nine .slider-arrows li:hover {
+  background: #FFD80B;
+  color: #000;
+  border-color: #FFD80B;
+}
+
+/* --- Block-feature-twentySix all four panels: square + subtle press-down --
+ * Hover: 1px translate, 1px shadow reduction (subtle, since panels are
+ * informational, not interactive primary affordances).
+ */
+.font-test-familjen .block-feature-twentySix .block-one,
+.font-test-familjen .block-feature-twentySix .block-two,
+.font-test-familjen .block-feature-twentySix .block-three,
+.font-test-familjen .block-feature-twentySix .block-four {
+  border-radius: 0;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.font-test-familjen .block-feature-twentySix .block-one:hover,
+.font-test-familjen .block-feature-twentySix .block-three:hover,
+.font-test-familjen .block-feature-twentySix .block-four:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 #000;
+}
+.font-test-familjen .block-feature-twentySix .block-two:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+}
+/* Bento grid icon symmetry: green-shield icon top-spacing = orange-speed
+ * icon bottom-spacing (~76px). Block-one was using Bootstrap's
+ * .justify-content-center utility (which has !important); anchor to
+ * flex-start with explicit padding-top to match block-four's natural
+ * bottom spacing. !important required to beat the Bootstrap utility. */
+.font-test-familjen .block-feature-twentySix .block-one {
+  justify-content: flex-start !important;
+  padding-top: 76px;
+}
+@media (max-width: 991px) {
+  /* Match green-shield top gap to orange-speed bottom gap on mobile.
+     block-four has padding-bottom 20px at this breakpoint (theme default);
+     mirror that on block-one's padding-top so the two icons share the
+     same edge spacing across the stacked layout. */
+  .font-test-familjen .block-feature-twentySix .block-one {
+    padding-top: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .font-test-familjen .block-feature-twentySix .block-one,
+  .font-test-familjen .block-feature-twentySix .block-two,
+  .font-test-familjen .block-feature-twentySix .block-three,
+  .font-test-familjen .block-feature-twentySix .block-four {
+    transition: none;
+  }
+}
+
+/* --- Domain search form (if present in hero): match the system ---------- */
+.font-test-familjen .block-feature-twentyFour form,
+.font-test-familjen .block-feature-twentyFour form input,
+.font-test-familjen .block-feature-twentyFour form button {
+  border-radius: 0;
+}
+.font-test-familjen .block-feature-twentyFour form {
+  border: 2px solid #000;
+}
+
+/* --- Brand-coherent focus rings: 3px black, offset clear of shadows ----- */
+.font-test-familjen :is(a, button, input, .accordion-button, .nav-link):focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 3px;
+  box-shadow: none;
+}
+.font-test-familjen .btn-eighteen:focus-visible,
+.font-test-familjen .pricing-section-six .pr-column .btn-eleven:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 4px;
+}
+
+/* --- Reduced motion: keep the shadow shift, drop the translate ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .font-test-familjen .btn-eighteen,
+  .font-test-familjen .btn-eighteen:hover,
+  .font-test-familjen .btn-eighteen:active,
+  .font-test-familjen .pricing-section-six .pr-column .btn-eleven,
+  .font-test-familjen .pricing-section-six .pr-column .btn-eleven:hover,
+  .font-test-familjen .pricing-section-six .pr-column .btn-eleven:active,
+  .font-test-familjen .pricing-nav-four .nav-link,
+  .font-test-familjen .pricing-nav-four .nav-link.active,
+  .font-test-familjen .pricing-nav-four .nav-link:not(.active):hover {
+    transform: none !important;
+    transition: box-shadow .12s ease, background .12s ease, color .12s ease;
+  }
+}
+
+
+/* =============================================================================
+ * Brutalist overhaul (2026-05-09) — section reorder + responsivity + secondary
+ * link + nav trim + footer cards + page-wide breakpoint fixes.
+ * ============================================================================= */
+
+/* --- Footer cards: brutalist on dark — white border + offset shadow --- */
+.font-test-familjen .footer-three.dark-version .address-wrapper .block {
+  border-radius: 0;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.20);
+  background: rgba(255, 255, 255, 0.07);
+  text-decoration: none;
+  color: inherit;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.font-test-familjen .footer-three.dark-version .address-wrapper .block:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.20);
+  color: inherit;
+}
+.font-test-familjen .footer-three.dark-version .address-wrapper .block .icon {
+  border-radius: 50%;
+  border: none;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  color: #fff;
+}
+.font-test-familjen .footer-three.dark-version .address-wrapper .block .icon svg {
+  width: 28px;
+  height: 28px;
+}
+.font-test-familjen .footer-three.dark-version .address-wrapper .siab-contact--email .icon {
+  background: #06B4FF;
+}
+.font-test-familjen .footer-three.dark-version .address-wrapper .siab-contact--wa .icon {
+  background: #00C592;
+}
+.font-test-familjen .footer-three.dark-version .address-wrapper .siab-contact--form .icon {
+  background: #F96A00;
+}
+
+/* --- Footer social icons: plain inline SVGs (Instagram + email), no box --- */
+.font-test-familjen .footer-three.dark-version .social-icon {
+  padding-left: 0;
+  margin-bottom: 0;
+  gap: 18px;
+}
+.font-test-familjen .footer-three.dark-version .social-icon li {
+  margin: 0;
+}
+.font-test-familjen .footer-three.dark-version .social-icon li a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  transition: color .12s ease, opacity .12s ease;
+}
+.font-test-familjen .footer-three.dark-version .social-icon li a:hover {
+  color: #FFD80B;
+}
+.font-test-familjen .footer-three.dark-version .social-icon li a svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* --- Footer bottom spacing: rely on margin/padding only (no divider line)
+       so the social-icon row doesn't read as crossing a horizontal rule. --- */
+.font-test-familjen .footer-three.dark-version .col-lg-3.order-lg-0 {
+  margin-bottom: 40px;
+}
+.font-test-familjen .footer-three.dark-version .copyright-text {
+  margin-top: 40px;
+  padding-top: 0;
+  border-top: none;
+  opacity: 0.7;
+}
+
+/* --- Footer nav section labels + links --- */
+.font-test-familjen .footer-three.dark-version .footer-nav .fs-6 {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  font-size: 13px;
+  opacity: 0.7;
+}
+.font-test-familjen .footer-three.dark-version .footer-nav-link li a:hover {
+  color: #FFD80B;
+}
+
+/* --- Footer logo: it's a yellow-on-dark wordmark, render at proper size --- */
+.font-test-familjen .footer-three.dark-version .logo img {
+  height: clamp(44px, 3vw, 56px);
+  width: auto;
+  max-height: none;
+}
+
+/* --- Footer h2 ("Hulp nodig?"): override theme's Playfair Display so the
+       footer typography matches the rest of the page (Familjen Grotesk). --- */
+.font-test-familjen .footer-three.dark-version .address-wrapper h2 {
+  font-family: 'Familjen Grotesk', sans-serif;
+}
+
+/* --- Copyright + legal meta: single unified row -----------------------
+ * Mandatory disclosure under Dutch law (Art. 3:15d BW, Art. 28
+ * Handelsregisterwet 2007) merged into one visual unit with the
+ * copyright line. Separators and meta text are subordinate in opacity
+ * while the copyright copy stays at .copyright-text default opacity.
+ * WCAG AA: rgba(255,255,255,0.7) on #121212 = ~5.3:1 for small text. */
+.font-test-familjen .footer-three.dark-version .siab-copyright-row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0 10px;
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+.font-test-familjen .footer-three.dark-version .siab-copyright-row abbr {
+  text-decoration: none;
+  cursor: help;
+}
+
+/* --- Footer color system: 3 tiers (PRIMARY / SECONDARY / MUTED) ----------
+ * Cleans up the prior mess of 4+ random white opacities.
+ *   PRIMARY  100% white  → h2, contact card titles (loud / structural)
+ *   SECONDARY ~78%       → body copy, contact subtext, nav links,
+ *                          section labels, social icons, "Connect met ons"
+ *   MUTED    ~55%        → entire bottom row (copyright + legal meta)
+ *   DIVIDER  10%         → horizontal rule between grid and bottom row
+ * All section-label opacity overrides are removed below to prevent
+ * compounding (opacity multiplies color alpha — easy to look murky). */
+.font-test-familjen .footer-three.dark-version {
+  --footer-primary: #ffffff;
+  --footer-secondary: rgba(255, 255, 255, 0.78);
+  --footer-muted: rgba(255, 255, 255, 0.55);
+  --footer-divider: rgba(255, 255, 255, 0.1);
+}
+/* Primary tier */
+.font-test-familjen .footer-three.dark-version .address-wrapper h2,
+.font-test-familjen .footer-three.dark-version .block .title {
+  color: var(--footer-primary);
+}
+/* Secondary tier */
+.font-test-familjen .footer-three.dark-version .block .fs-20,
+.font-test-familjen .footer-three.dark-version .footer-nav .fs-6,
+.font-test-familjen .footer-three.dark-version .col-lg-3 .fs-6,
+.font-test-familjen .footer-three.dark-version .footer-nav-link li a,
+.font-test-familjen .footer-three.dark-version .social-icon li a {
+  color: var(--footer-secondary);
+}
+/* Remove opacity-on-opacity: section labels use color alpha only */
+.font-test-familjen .footer-three.dark-version .footer-nav .fs-6 {
+  opacity: 1;
+}
+/* Muted tier — entire bottom row */
+.font-test-familjen .footer-three.dark-version .copyright-text,
+.font-test-familjen .footer-three.dark-version .siab-cr-copy,
+.font-test-familjen .footer-three.dark-version .siab-cr-meta,
+.font-test-familjen .footer-three.dark-version .siab-legal-meta__sep {
+  color: var(--footer-muted);
+}
+.font-test-familjen .footer-three.dark-version .siab-cr-meta,
+.font-test-familjen .footer-three.dark-version .siab-cr-copy {
+  font-size: 0.8125rem;
+}
+/* Drop the previous .copyright-text opacity (which compounded with color) */
+.font-test-familjen .footer-three.dark-version .copyright-text {
+  opacity: 1;
+}
+/* Hover stays brand yellow (unchanged for nav + social) */
+
+/* --- Bottom row divider: full-width rule above the copyright/legal line.
+       Theme's `.footer-three.dark-version .copyright-text` rule uses
+       `position: absolute; bottom: 0` which causes overlap with the column
+       row above (social icons pass through the divider). Reset to static
+       so the row flows below the grid in normal document order. The `m0`
+       Bootstrap utility requires !important on margin-top to override. */
+.font-test-familjen .footer-three.dark-version .siab-copyright-row {
+  position: static;
+  left: auto;
+  bottom: auto;
+  width: 100%;
+  margin-top: 64px !important;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+@media (max-width: 991px) {
+  .font-test-familjen .footer-three.dark-version .siab-copyright-row {
+    margin-top: 40px !important;
+    padding-top: 24px;
+  }
+}
+
+/* --- Hero illustration: in-flow Bootstrap col + conditional right break-out
+ * Markup: .illustration moved inside .row as its own col-lg-6 / col-md-4 / col-12.
+ * Override style.css's `position: absolute` with `static !important`.
+ *
+ * Break-out formula (≥992px):
+ *   extension = max(0px, (100vw − 1550px) / 2 − clamp(12px, 1.7vw, 24px))
+ * Container.lg max-width is 1550px. Empty space on each side = (vw − 1550) / 2.
+ * Subtract page gutter so rocket never touches viewport edge.
+ *
+ *   1280–1440px vw → extension = 0  (container fills viewport, no breakout room)
+ *   1920px  vw     → extension = 161px (185px empty − 24px gutter)
+ *   2560px  vw     → extension = 481px (505px empty − 24px gutter)
+ */
+/* Baseline (mobile-first): illustration flows naturally in the column */
+.font-test-familjen .hero-banner-nine .illustration {
+  display: block;
+  margin: 0;
+}
+.font-test-familjen .hero-banner-nine .illustration lottie-player {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Desktop (≥992px): illustration is position:absolute so it is removed from
+   the normal flow and CANNOT push the row taller than the text column.
+   The row uses align-items:stretch → the illustration col stretches to match
+   the text col's natural height. The illustration fills that col vertically
+   (top:0; bottom:0 = inherited height from containing block) then extends
+   right via breakout calc.
+
+   ROOT CAUSE of the original bug: style.css sets aspect-ratio:4/3 directly
+   on .illustration. With position:absolute + top:0 + bottom:0, this caused
+   the browser to use width×(3/4) as height instead of the containing block's
+   629px, yielding 948×711px — 82px taller than the text col. Fix: reset
+   aspect-ratio:auto on the illustration so top:0;bottom:0 fully controls height.
+
+   The lottie-player then uses aspect-ratio:4/3 + max-width:100% + max-height:100%
+   with both width/height auto — this is the pure-CSS object-fit:contain pattern
+   for non-replaced elements. The browser evaluates both max constraints and picks
+   whichever is tighter, deriving the other axis from the ratio:
+     At 1440vw (no breakout, ill=722px, col-h=629px):
+       722×(3/4)=541px ≤ 629px → width wins → lottie=722×541 (4:3 ✓)
+     At 1920vw (breakout, ill=948px, col-h=629px):
+       948×(3/4)=711px > 629px → height wins → lottie=839×629 (4:3 ✓)
+     At 2560vw (breakout, ill=1256px, col-h=942px):
+       1256×(3/4)=942px = col-h → lottie=1256×942 (4:3 ✓, fills exactly) */
+@media (min-width: 992px) {
+  .font-test-familjen .hero-banner-nine {
+    overflow: visible;
+  }
+  .font-test-familjen .hero-banner-nine .row {
+    align-items: stretch;
+  }
+  .font-test-familjen .hero-banner-nine .col-12.col-lg-6 {
+    padding-right: 0;
+    overflow: visible;
+    position: relative;
+  }
+  .font-test-familjen .hero-banner-nine .illustration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: none; /* cancel style.css's translateY(-50%) */
+    aspect-ratio: auto; /* cancel style.css's aspect-ratio:4/3 — see note above */
+    width: calc(100% + max(0px, (100vw - 1550px) / 2 - clamp(12px, 1.7vw, 24px)));
+    max-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden; /* clip lottie's scaled-up edges (whitespace crop) */
+  }
+  .font-test-familjen .hero-banner-nine .illustration lottie-player {
+    aspect-ratio: 4 / 3;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    flex-shrink: 0;
+    /* The lottie's 1600×1200 viewBox includes built-in whitespace around
+       the rocket/desk artwork (~10-12% padding each side). Scale up + clip
+       on the parent to crop the padding visually without re-authoring the
+       JSON. transform-origin anchors at left so the rocket's left edge
+       isn't clipped — extra crop happens on the right (where there's
+       breakout space anyway). */
+    transform: scale(1.18);
+    transform-origin: left center;
+  }
+}
+
+/* Below lg: stack, no breakout, restore standard col gutter */
+@media (max-width: 991px) {
+  .font-test-familjen .hero-banner-nine {
+    padding-bottom: 80px !important;
+  }
+  .font-test-familjen .hero-banner-nine .row {
+    align-items: center;
+  }
+  .font-test-familjen .hero-banner-nine .illustration {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+}
+@media (max-width: 767px) {
+  .font-test-familjen .hero-banner-nine {
+    padding-top: 80px !important;
+    padding-bottom: 60px !important;
+  }
+  /* Subtext: brand warm grey instead of Bootstrap's cold #212529 */
+  .font-test-familjen .hero-banner-nine .fs-24 {
+    color: #5A504B !important;
+  }
+  /* Cap the lottie height on mobile so it doesn't dominate the scroll */
+  .font-test-familjen .hero-banner-nine .illustration {
+    max-height: 320px;
+    overflow: hidden;
+  }
+  .font-test-familjen .hero-banner-nine .illustration lottie-player {
+    max-height: 320px;
+  }
+}
+
+/* --- Hero secondary CTA: text-link with dashed underline (not a box) ----
+ * Tertiary "soft action" pattern: bold text + dashed underline beneath.
+ * No border, no fill, no shadow. The 60px min-height creates an invisible
+ * tap zone matching the primary CTA's height — text floats vertically
+ * centered. WCAG: text #5A504B on #FEF3F4 = 6.8:1 (AA pass).
+ */
+.font-test-familjen .siab-cta-group {
+  padding-bottom: 0;
+  gap: 24px !important;
+  align-items: center;
+}
+.font-test-familjen .siab-see-how {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Chivo', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: #5A504B;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #5A504B;
+  text-underline-offset: 5px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: color .15s ease, text-decoration-color .15s ease;
+}
+.font-test-familjen .siab-see-how:hover {
+  color: #1A1A1A;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #1A1A1A;
+}
+.font-test-familjen .siab-see-how:active {
+  color: #000;
+  text-decoration-color: #000;
+}
+.font-test-familjen .siab-see-how:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .font-test-familjen .siab-see-how {
+    transition: none;
+  }
+}
+@media (max-width: 767px) {
+  /* Mobile hero refinements (synthesized from frontend-design + ux-pro-max
+     audits): drop the cookie-cutter full-width CTA in favour of intrinsic
+     sizing so the brutalist hard-shadow has breathing room and primary +
+     secondary can sit on the same row. */
+  .font-test-familjen .siab-cta-group {
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: wrap;
+    gap: 16px !important;
+  }
+  .font-test-familjen .siab-cta-group .btn-eighteen {
+    width: auto;
+    min-width: 220px;
+    text-align: center;
+  }
+  .font-test-familjen .siab-cta-group .siab-see-how {
+    justify-content: flex-start;
+  }
+}
+
+/* --- Hero three-point line: tighten on tablet + mobile to prevent orphan wrap -- */
+@media (max-width: 768px) {
+  .font-test-familjen .hero-banner-nine .fs-24 {
+    font-size: 18px;
+    line-height: 1.5;
+    hyphens: none;
+  }
+}
+@media (max-width: 575px) {
+  .font-test-familjen .hero-banner-nine .fs-24 {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+}
+
+/* --- Navbar: brutalist register, viewport-scaled with clamp() ----------- */
+.font-test-familjen .theme-main-menu .navbar-toggler {
+  background: #000;
+  border-radius: 0;
+  border: 2px solid #000;
+  width: 44px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+/* CSS-only hamburger icon: 3 white bars, cross-transform on open ---------- */
+.font-test-familjen .theme-main-menu .navbar-toggler span,
+.font-test-familjen .theme-main-menu .navbar-toggler span::before,
+.font-test-familjen .theme-main-menu .navbar-toggler span::after {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform .2s ease, opacity .2s ease, background .2s ease, top .2s ease;
+}
+.font-test-familjen .theme-main-menu .navbar-toggler span {
+  top: 50%;
+  margin-top: -1px;
+  overflow: visible;
+  text-indent: 0;
+}
+.font-test-familjen .theme-main-menu .navbar-toggler span::before {
+  content: '';
+  top: -7px;
+}
+.font-test-familjen .theme-main-menu .navbar-toggler span::after {
+  content: '';
+  top: 7px;
+}
+.font-test-familjen .theme-main-menu .navbar-toggler[aria-expanded="true"] span {
+  background: transparent;
+  opacity: 1;
+}
+.font-test-familjen .theme-main-menu .navbar-toggler[aria-expanded="true"] span::before {
+  transform: translateX(-50%) rotate(45deg);
+  top: 0;
+}
+.font-test-familjen .theme-main-menu .navbar-toggler[aria-expanded="true"] span::after {
+  transform: translateX(-50%) rotate(-45deg);
+  top: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .font-test-familjen .theme-main-menu .navbar-toggler span,
+  .font-test-familjen .theme-main-menu .navbar-toggler span::before,
+  .font-test-familjen .theme-main-menu .navbar-toggler span::after {
+    transition: none;
+  }
+}
+.font-test-familjen .theme-main-menu .nav-item .nav-link {
+  font-size: clamp(15px, 1.1vw, 18px);
+  font-weight: 600;
+  color: #000;
+  letter-spacing: 0.01em;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  transition: border-color .12s ease;
+}
+.font-test-familjen .theme-main-menu .nav-item .nav-link:hover {
+  color: #000;
+  border-bottom-color: #FFD80B;
+}
+.font-test-familjen .theme-main-menu.fixed {
+  box-shadow: none;
+  border-bottom: 2px solid #000;
+}
+/* Logo: scales with viewport via clamp on height (rather than max-height)
+   so the image fills the navbar's content area proportionally. */
+.font-test-familjen .theme-main-menu .siab-logo img,
+.font-test-familjen .theme-main-menu .logo img {
+  height: clamp(44px, 3vw, 72px);
+  width: auto;
+  max-height: none;
+  display: block;
+}
+.font-test-familjen .theme-main-menu .btn-eighteen {
+  font-size: clamp(15px, 1vw, 17px);
+  padding: clamp(10px, 0.7vw, 13px) clamp(20px, 1.4vw, 26px);
+  height: auto;
+  line-height: 1.2;
+}
+
+/* --- Login link: mirrors .siab-see-how ("Hoe werkt het?") behavior ----------
+ * Plain text "Inloggen" — same tertiary-link grammar as the hero's secondary
+ * action. Dashed underline at rest, dashed-underline-darkens on hover (not
+ * snap-to-solid), eased color transition (not step-end). Only differs from
+ * .siab-see-how in size + weight to fit the navbar context. */
+.font-test-familjen .theme-main-menu .login-btn-one {
+  display: inline-flex;
+  align-items: center;
+  min-height: calc(clamp(15px, 1vw, 17px) * 1.2 + clamp(10px, 0.7vw, 13px) * 2 + 4px);
+  padding: 0 2px;
+  font-family: 'Chivo', sans-serif;
+  font-size: clamp(15px, 1vw, 17px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: #5A504B;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #5A504B;
+  text-underline-offset: 5px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: color .15s ease, text-decoration-color .15s ease;
+}
+.font-test-familjen .theme-main-menu .login-btn-one:hover {
+  color: #1A1A1A;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #1A1A1A;
+}
+.font-test-familjen .theme-main-menu .login-btn-one:active {
+  color: #000;
+  text-decoration-color: #000;
+}
+.font-test-familjen .theme-main-menu .login-btn-one:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .font-test-familjen .theme-main-menu .login-btn-one {
+    transition: none;
+  }
+}
+
+/* Pair-spacing between the Login link and the "Start gratis" CTA.
+   Bootstrap's `ms-3` (16px) reads too tight given both elements now share
+   the same 50px height + weight 700 — they're visually a paired widget. */
+.font-test-familjen .theme-main-menu .right-widget ul li + li {
+  margin-left: clamp(16px, 1.6vw, 28px) !important;
+}
+.font-test-familjen .theme-main-menu .inner-content {
+  padding-top: clamp(12px, 0.8vw, 20px);
+  padding-bottom: clamp(12px, 0.8vw, 20px);
+  /* Refinement 2: match horizontal gutter to Bootstrap container up to max-width.
+     Below ~1420px the container uses 12px gutter; the gap-one default is 40px.
+     We reduce to 24px at desktop so logo left-aligns closer to the content edge.
+     At very wide viewports (>1440) the navbar goes full-bleed (its own thing).
+     Right-side compensation: subtract scrollbar width (100vw - 100%) so the
+     right-widget's distance from viewport-right matches the logo's distance
+     from viewport-left (visual symmetry, accounts for vertical scrollbar). */
+  padding-left: clamp(12px, 1.7vw, 24px);
+  padding-right: max(0px, calc(clamp(12px, 1.7vw, 24px) - (100vw - 100%)));
+}
+
+/* --- Refinement 1: true viewport center for nav items (≥992px only) ---
+ * 3-column grid: 1fr (logo, left) | auto (nav, centered) | 1fr (right-widget, right).
+ * Equal outer 1fr columns ensure the auto-width nav column sits at true viewport midpoint.
+ * Markup order: .siab-logo, .right-widget, nav — assigned via grid-area.
+ * Below lg the hamburger layout takes over (flex from Bootstrap). */
+@media (min-width: 992px) {
+  /* Use direct child combinator (>) so the grid only applies to the outer
+     d-flex container — NOT the inner ul.d-flex inside the right-widget. */
+  .font-test-familjen .theme-main-menu .top-header > .d-flex {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: "logo nav right";
+    align-items: center;
+    gap: 0;
+  }
+  .font-test-familjen .theme-main-menu .top-header > .d-flex > .siab-logo {
+    grid-area: logo;
+    justify-self: start;
+    margin-right: 0 !important;
+  }
+  .font-test-familjen .theme-main-menu .top-header > .d-flex > .right-widget {
+    grid-area: right;
+    justify-self: end;
+    margin-left: 0 !important;
+    order: unset !important;
+  }
+  .font-test-familjen .theme-main-menu .top-header > .d-flex > nav.navbar {
+    grid-area: nav;
+    display: flex !important;
+    justify-content: center;
+    margin-left: 0 !important;
+    order: unset !important;
+  }
+  .font-test-familjen .theme-main-menu .top-header > .d-flex > nav.navbar .navbar-collapse {
+    flex-grow: 0;
+  }
+}
+
+/* --- Page-wide responsivity overrides --- */
+@media (max-width: 1199px) {
+  .font-test-familjen .pricing-nav-four .nav-link {
+    min-width: 130px;
+    padding: 12px 18px;
+    font-size: 15px;
+  }
+}
+@media (max-width: 991px) {
+  .font-test-familjen .faq-section-three .col-lg-5 .title-eleven {
+    margin-bottom: 32px;
+  }
+}
+@media (max-width: 575px) {
+  .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended {
+    margin-top: 32px;
+  }
+  .font-test-familjen .block-feature-twentyFive .card-style-twelve {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* --- Inline info tooltips (pricing-cards) --- */
+.siab-info-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  padding: 2px;
+  margin: 0 0 0 6px;
+  color: #aaa;
+  cursor: help;
+  vertical-align: middle;
+  line-height: 1;
+  transition: color .2s ease;
+}
+.siab-info-trigger::before {
+  /* extended invisible tap-area for WCAG 2.5.5 (~42x42px) */
+  content: "";
+  position: absolute;
+  inset: -14px;
+}
+.siab-info-trigger:hover,
+.siab-info-trigger:focus-visible {
+  color: #1d1d1f;
+  outline: none;
+}
+.siab-info-trigger svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+/* Tooltip skin (Bootstrap override) */
+.tooltip.bs-tooltip-auto .tooltip-inner,
+.tooltip .tooltip-inner {
+  background: #1d1d1f;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.45;
+  max-width: 240px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-align: left;
+}
+.tooltip .tooltip-arrow::before { border-top-color: #1d1d1f; }
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before { border-bottom-color: #1d1d1f; }
+.tooltip.bs-tooltip-start .tooltip-arrow::before { border-left-color: #1d1d1f; }
+.tooltip.bs-tooltip-end .tooltip-arrow::before { border-right-color: #1d1d1f; }
+
+/* ============================================================
+   Testimonial logos — monochrome wit standaard, volledige merkkleur op hover.
+   Iets groter dan de eerste poging (36px → 44px) voor meer aanwezigheid.
+   ============================================================ */
+.font-test-familjen .feedback-slider-six .logo {
+  filter: brightness(0) invert(1);
+  opacity: 0.7;
+  height: 44px;
+  max-height: 44px;
+  max-width: 160px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+.font-test-familjen .feedback-slider-six .logo:hover {
+  filter: none;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .font-test-familjen .feedback-slider-six .logo {
+    transition: none;
+  }
+}
+
+
+/* ========================================================================
+   Page-level inline styles previously embedded in standalone index.php
+   ======================================================================== */
+
+.siab-heading {
+  margin-top: 88px;
+  margin-bottom: 24px;
+  text-align: center;
+  font-family: "Familjen Grotesk", sans-serif;
+  font-size: clamp(26px, 3.8vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: #fff;
+}
+@media (max-width: 767px) {
+  .siab-heading {
+    margin-top: 56px;
+    margin-bottom: 16px;
+  }
+}
+
+.siab-marquee {
+  background: rgba(255, 255, 255, 0.13);
+  border: 2px solid #000;
+  border-radius: 0;
+  height: 94px;
+  margin: 8px 0 25px;
+  overflow: hidden;
+  position: relative;
+  --siab-gap: 80px;
+  --siab-duration: 60s;
+}
+.siab-marquee__viewport {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  gap: var(--siab-gap);
+  padding: 0 32px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+}
+.siab-marquee__track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--siab-gap);
+  white-space: nowrap;
+  animation: siab-marquee-scroll var(--siab-duration) linear infinite;
+}
+.siab-marquee__track li {
+  font-family: "Chivo", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: -0.005em;
+  flex-shrink: 0;
+}
+.siab-marquee:hover .siab-marquee__track {
+  animation-play-state: paused;
+}
+@keyframes siab-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--siab-gap))); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .siab-marquee__track { animation: none; }
+}
+@media (max-width: 767px) {
+  .siab-marquee {
+    height: 72px;
+    margin: 56px 0 16px;
+    --siab-gap: 48px;
+    --siab-duration: 42s;
+  }
+  .siab-marquee__viewport { padding: 0 16px; }
+  .siab-marquee__track li { font-size: 17px; }
+}
+
+.siab-perks {
+  list-style: none;
+  margin: 24px 0 0 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 40px;
+}
+.siab-perks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Chivo", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.4;
+}
+.siab-perks svg {
+  flex-shrink: 0;
+  color: rgb(245, 233, 0);
+}
+@media (max-width: 767px) {
+  .siab-perks {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .siab-perks li { font-size: 15px; }
+}
+
+/* Replacement for slick feedback slider: simple responsive grid */
+.siab-testimonials {
+  margin: 0;
+}
+.siab-testimonials .feedback-block {
+  height: 100%;
+}
+
+/* ========================================================================
+   Accessibility / heading-order overrides (Phase 6 audit fixes)
+   ======================================================================== */
+
+/* Make h3 promise cards look like the original h4 */
+.card-style-eleven h3.card-style-eleven-heading {
+  font-size: 28px;
+  margin: 29px 0 8px;
+  font-weight: 500;
+}
+.card-style-twelve h3.card-style-twelve-heading {
+  font-size: 24px;
+  margin: 25px 0;
+  font-weight: 500;
+}
+
+/* Make pricing h3 ("Inbegrepen" / "Alles van Website, plus:") look like the original h6 */
+.pricing-section-six .pr-column h3.pricing-section-heading {
+  font-size: 24px;
+  border-bottom: 2px solid #000;
+  padding-bottom: 25px;
+  margin: 65px 0 45px;
+  font-weight: 500;
+}
+
+/* sr-only / visually-hidden for landmark section headings */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Color contrast: Bootstrap's .opacity-75 utility uses !important, so we
+   match it. fs-14 captions in the pricing section need contrast ≥ AA. */
+.pricing-section-six .fs-14.opacity-75,
+.pricing-section-six .pr-column .info2.fs-14.opacity-75 {
+  opacity: 1 !important;
+  color: #595959 !important;
+}
+
+/* ========================================================================
+   Visual-parity fixes (Phase 8.5 — diff vs PHP standalone)
+   ======================================================================== */
+
+/* Slider arrow SVG centering: the inline SVG default-displays as block
+   anchored top-left of the 58px circle, while the original PHP uses an FA
+   <i> glyph that inline-centers via text-align + line-height. Flex-center
+   the <li> so any child element (svg or <i>) lands in the middle. */
+.feedback-section-nine .slider-arrows li {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.feedback-section-nine .slider-arrows li svg {
+  display: block;
+}
+
+/* Tailwind 4 preflight sets `border: 0 solid` on every element. Bootstrap's
+   `.border-top` / `.border-bottom` utilities only set the top/bottom edge —
+   they rely on the browser default `border-style: none` on the other sides
+   to keep them invisible. With preflight in play, all 4 sides paint when
+   `.border-2` sets the width. Force-hide the side borders on the legacy
+   3-USP block so it matches the source. */
+.block-feature-twentyFive .border-top.border-bottom {
+  border-left-style: none !important;
+  border-right-style: none !important;
+}
+
+/* Tailwind 4 ships a `.collapse` *visibility* utility that conflicts with
+   Bootstrap's `.collapse` *collapsible-state* class on .navbar-collapse —
+   the Tailwind rule sets `visibility: collapse` which hides the nav links
+   inline even on desktop where the menu is supposed to be open. Force
+   visibility back so Bootstrap's collapse semantics win. */
+.navbar-collapse,
+.navbar-collapse.collapse,
+.accordion-collapse,
+.accordion-collapse.collapse {
+  visibility: visible !important;
+}
