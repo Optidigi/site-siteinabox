@@ -1,5 +1,20 @@
 ---
 import '../styles/global.css';
+// Theme stylesheets — Astro/Vite bundles, minifies, content-hashes, and emits
+// in import order so the cascade matches the legacy <link> chain exactly.
+import '../styles/theme/bootstrap.min.css';
+import '../styles/theme/style.css';
+import '../styles/theme/responsive.css';
+import '../styles/theme/siab-overrides.css';
+
+// Vendor JS — Astro/Vite content-hashes and copies these to the dist; we load
+// them as classic (non-module) scripts so jQuery sets up its window globals
+// and Slick (a jQuery plugin) can extend them. `?url` gives us the final
+// hashed URL to put in <script src>.
+import jqueryUrl from '../scripts/jquery.min.js?url';
+import slickUrl from '../scripts/slick.min.js?url';
+import lottiePlayerUrl from '../scripts/lottie-player.min.js?url';
+
 import Seo from '../components/seo/Seo.astro';
 import JsonLdOrganization from '../components/seo/JsonLdOrganization.astro';
 import JsonLdLocalBusiness from '../components/seo/JsonLdLocalBusiness.astro';
@@ -31,11 +46,8 @@ const { title, description, ogImage, noindex } = Astro.props;
     <JsonLdOrganization />
     <JsonLdLocalBusiness />
 
-    <!-- Legacy Piku theme stylesheets (preserved for visual fidelity) -->
-    <link rel="stylesheet" href="/legacy/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/legacy/assets/css/style.css" />
-    <link rel="stylesheet" href="/legacy/assets/css/responsive.css" />
-    <link rel="stylesheet" href="/legacy/assets/css/siab-overrides.css" />
+    <!-- Theme CSS is bundled via Vite imports in the frontmatter above; Astro
+         emits hashed <link> tags automatically. -->
 
     <!-- Trimmed Google Fonts: only the families actually rendered by .font-test-familjen + .font-Playfair -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,6 +56,11 @@ const { title, description, ogImage, noindex } = Astro.props;
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;900&family=Familjen+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
     />
+
+    <!-- Gordita (body font) — vendored locally in /theme/fonts/gordita/.
+         Loaded via plain <link> rather than CSS @import to avoid the bundler
+         trying to module-resolve the public/ asset path. -->
+    <link rel="stylesheet" href="/theme/fonts/gordita/stylesheet.css" />
   </head>
   <body class="font-test-familjen">
     <div class="main-page-wrapper">
@@ -225,9 +242,9 @@ const { title, description, ogImage, noindex } = Astro.props;
          Bootstrap-bundle was dropped: collapse + tab are handled in the inline
          script above, tooltips are pure CSS (siab-overrides.css).
          WOW + theme.js were dropped earlier this commit. -->
-    <script is:inline defer src="/legacy/assets/vendor/jquery.min.js"></script>
-    <script is:inline defer src="/legacy/assets/vendor/slick/slick.min.js"></script>
-    <script is:inline defer src="/legacy/assets/vendor/lottie-player.min.js"></script>
+    <script is:inline defer src={jqueryUrl}></script>
+    <script is:inline defer src={slickUrl}></script>
+    <script is:inline defer src={lottiePlayerUrl}></script>
 
     <!-- Slick init + reduced-motion Lottie + slick aria-hidden-focus fix -->
     <script is:inline>
