@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/siab/Header.astro';
 import Footer from '../components/siab/Footer.astro';
 import ContactForm from '../components/forms/ContactForm.astro';
+import FaqSection from '../components/siab/FaqSection.astro';
 import { site } from '../content/site';
 
 const pageTitle = 'Contact';
@@ -17,8 +18,6 @@ const phoneDisplay = '+31 6 12 34 56 78';
 const phoneHref = 'tel:+31612345678';
 // PLACEHOLDER: bevestig openingstijden voor de live-zetting.
 const officeHours = 'Ma–Vr · 09:00–17:00';
-// PLACEHOLDER: bevestig SLA-tekst voor de live-zetting.
-const replySla = 'Antwoord op werkdagen voor 17:00.';
 
 const contactPageJsonLd = {
   '@context': 'https://schema.org',
@@ -60,7 +59,7 @@ const contactPageJsonLd = {
       </div>
     </section>
 
-    <section class="mt-50 lg-mt-30 mb-180 lg-mb-80" aria-label="Contactformulier en directe contactgegevens">
+    <section class="mt-50 lg-mt-30" aria-label="Contactformulier en directe contactgegevens">
       <div class="container lg">
         <div class="row gx-xxl-5 align-items-stretch">
           <div class="col-lg-7 d-flex mt-30 lg-mt-30">
@@ -102,8 +101,6 @@ const contactPageJsonLd = {
                 <p class="siab-info-eyebrow">Bereikbaarheid</p>
                 {/* PLACEHOLDER: openingstijden bevestigen */}
                 <p class="siab-info-line">{officeHours}</p>
-                {/* PLACEHOLDER: SLA bevestigen */}
-                <p class="siab-info-line">{replySla}</p>
               </div>
 
               <hr class="siab-info-divider" />
@@ -129,6 +126,8 @@ const contactPageJsonLd = {
         </div>
       </div>
     </section>
+
+    <FaqSection />
   </main>
   <Footer />
 
