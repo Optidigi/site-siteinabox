@@ -2,7 +2,6 @@
 import { site } from '../../content/site';
 
 const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
-const fallbackEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? site.nap?.email ?? 'info@siteinabox.nl';
 ---
 
 <section class="siab-contact-form-section" aria-label="Contactformulier">
@@ -75,8 +74,6 @@ const fallbackEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? site.nap?.email ??
       <button type="submit" class="btn-eighteen siab-submit">Verstuur bericht</button>
       <p class="siab-sla m0">We reageren binnen 1 werkdag.</p>
     </div>
-
-    <p class="siab-alt-line m0">Liever direct mailen? <a href={`mailto:${fallbackEmail}`} class="siab-see-how">{fallbackEmail}</a></p>
   </form>
 
   <div class="siab-success" role="status" aria-live="polite" tabindex="-1" hidden data-siab-success>
@@ -235,13 +232,6 @@ const fallbackEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? site.nap?.email ??
     font-weight: 500;
     font-size: 15px;
     color: #000000bf;
-  }
-
-  .siab-alt-line {
-    margin-top: 18px;
-    font-family: 'Chivo', sans-serif;
-    font-size: 14px;
-    color: #5a504b;
   }
 
   .siab-honeypot {
