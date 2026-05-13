@@ -1,0 +1,132 @@
+---
+// 3-state theme cycle: System → Light → Dark → System.
+// "System" = no data-theme attribute on <html> (CSS follows prefers-color-scheme).
+// "Light" / "Dark" = explicit data-theme + corresponding localStorage entry.
+// View Transitions API gives a smooth crossfade when supported, gated by
+// prefers-reduced-motion. The no-flash inline script in BaseLayout reads
+// localStorage at first paint, so explicit choices persist across navigation.
+---
+
+<button
+  type="button"
+  class="siab-theme-toggle"
+  data-siab-theme-toggle
+  aria-label="Wissel modus: systeem, licht of donker"
+  title="Wissel modus"
+>
+  <svg class="siab-theme-toggle__icon siab-theme-toggle__icon--system" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="12" rx="1" />
+    <path d="M8 20h8M12 16v4" />
+  </svg>
+  <svg class="siab-theme-toggle__icon siab-theme-toggle__icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  </svg>
+  <svg class="siab-theme-toggle__icon siab-theme-toggle__icon--dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+  <span class="visually-hidden" data-siab-theme-label>Systeem</span>
+</button>
+
+<style>
+  .siab-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: transparent;
+    border: 2px solid var(--siab-border);
+    border-radius: 0;
+    color: var(--siab-text);
+    cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+  .siab-theme-toggle:hover {
+    background: var(--siab-accent-yellow);
+    color: #000;
+  }
+  .siab-theme-toggle:focus-visible {
+    outline: 3px solid var(--siab-border);
+    outline-offset: 3px;
+  }
+
+  /* Icon visibility driven by data-theme-state on the button itself, set by JS. */
+  .siab-theme-toggle__icon { display: none; }
+  .siab-theme-toggle[data-theme-state="system"] .siab-theme-toggle__icon--system { display: block; }
+  .siab-theme-toggle[data-theme-state="light"]  .siab-theme-toggle__icon--light  { display: block; }
+  .siab-theme-toggle[data-theme-state="dark"]   .siab-theme-toggle__icon--dark   { display: block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .siab-theme-toggle { transition: none; }
+  }
+
+  /* Forced-colors: keep just the border (box-shadow is suppressed by the OS). */
+  @media (forced-colors: active) {
+    .siab-theme-toggle { border-color: ButtonText; }
+    .siab-theme-toggle:focus-visible { outline-color: Highlight; }
+  }
+</style>
+
+<script>
+  type ThemeState = 'system' | 'light' | 'dark';
+
+  function readState(): ThemeState {
+    try {
+      const saved = localStorage.getItem('siab-theme');
+      if (saved === 'light' || saved === 'dark') return saved;
+    } catch {}
+    return 'system';
+  }
+
+  function applyState(state: ThemeState) {
+    const html = document.documentElement;
+    if (state === 'system') {
+      html.removeAttribute('data-theme');
+      try { localStorage.removeItem('siab-theme'); } catch {}
+    } else {
+      html.setAttribute('data-theme', state);
+      try { localStorage.setItem('siab-theme', state); } catch {}
+    }
+  }
+
+  function syncButton(btn: HTMLButtonElement, state: ThemeState) {
+    btn.setAttribute('data-theme-state', state);
+    const label = btn.querySelector<HTMLElement>('[data-siab-theme-label]');
+    if (label) {
+      label.textContent = state === 'system' ? 'Systeem' : state === 'light' ? 'Licht' : 'Donker';
+    }
+  }
+
+  function cycle(state: ThemeState): ThemeState {
+    return state === 'system' ? 'light' : state === 'light' ? 'dark' : 'system';
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-siab-theme-toggle]').forEach((btn) => {
+    syncButton(btn, readState());
+
+    btn.addEventListener('click', () => {
+      const upcoming = cycle(readState());
+      const apply = () => { applyState(upcoming); syncButton(btn, upcoming); };
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Progressive enhancement: View Transitions API for a smooth crossfade.
+      // Plain apply when unsupported or when reduced-motion is requested.
+      const vt = (document as Document & { startViewTransition?: (cb: () => void) => unknown }).startViewTransition;
+      if (!reduceMotion && typeof vt === 'function') {
+        vt.call(document, apply);
+      } else {
+        apply();
+      }
+    });
+
+    // Cross-tab sync: if another tab toggles, mirror the change here.
+    window.addEventListener('storage', (e) => {
+      if (e.key !== 'siab-theme') return;
+      const newState: ThemeState =
+        e.newValue === 'light' || e.newValue === 'dark' ? e.newValue : 'system';
+      applyState(newState);
+      syncButton(btn, newState);
+    });
+  });
+</script>
