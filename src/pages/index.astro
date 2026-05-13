@@ -30,12 +30,15 @@ const ctaSignup = 'mailto:info@siteinabox.nl?subject=Start%20gratis';
   <Header />
 
   <main>
+  <!-- ============================== Above-the-fold (hero + cards strip) ============================== -->
+  <div class="siab-above-fold">
   <!-- ============================== Hero ============================== -->
   <section class="hero-banner-nine z-1 position-relative pt-225 md-pt-150 pb-225 xl-pb-200 md-pb-120" aria-label="Introductie">
     <div class="container lg">
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center">
-          <h1 class="hero-heading font-Playfair">Een website voor je bedrijf.<br />Zonder gedoe.</h1>
+          {/* Space before <br /> is intentional: the <br /> is hidden on mobile via siab-overrides.css so the heading wraps as one string; the space preserves natural word spacing in that mode. */}
+          <h1 class="hero-heading">Een website voor je bedrijf. <br />Zonder gedoe.</h1>
           <p class="fs-24 text-dark pt-35 lg-pt-30 pe-xxl-5">Online binnen 3 werkdagen · Geen verrassingen ·<span class="d-block d-sm-inline"> Alleen betalen als je tevreden bent.</span></p>
           <p class="fs-22 pt-30 lg-pt-20 mb-0">Vanaf <span class="fw-500 text-dark">€19</span>/maand</p>
           <div class="siab-cta-group d-flex align-items-center flex-wrap gap-3 pt-15">
@@ -45,22 +48,20 @@ const ctaSignup = 'mailto:info@siteinabox.nl?subject=Start%20gratis';
         </div>
         <div class="col-12 col-lg-6 mt-4 mt-lg-0">
           <div class="illustration">
-            <lottie-player
-              src="/theme/lottie/rocket-siab.json"
-              background="transparent"
-              speed="1"
-              loop
-              autoplay
+            <div
+              id="hero-rocket"
+              class="lottie-rocket"
+              role="img"
               aria-label="Animatie: jouw bedrijfswebsite klaar voor lancering"
-            ></lottie-player>
+            ></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================== Promise cards + reassurance ============================== -->
-  <section class="block-feature-twentyFour pb-80 lg-pb-40" aria-labelledby="onze-belofte-heading">
+  <!-- ============================== Promise cards (purple strip, seamless with reassurance below) ============================== -->
+  <section class="hero-cards-strip" aria-labelledby="onze-belofte-heading">
     <h2 id="onze-belofte-heading" class="visually-hidden">Onze belofte</h2>
     <div class="container lg">
       <div class="row gx-xxl-5">
@@ -95,8 +96,14 @@ const ctaSignup = 'mailto:info@siteinabox.nl?subject=Start%20gratis';
           </div>
         </div>
       </div>
+    </div>
+  </section>
+  </div>
 
-      <h3 class="siab-heading">Voor elke starter die professioneel online wil staan.</h3>
+  <!-- ============================== Audience reassurance (continues purple seamlessly) ============================== -->
+  <section class="block-feature-twentyFour pb-80 lg-pb-40" aria-labelledby="audience-heading">
+    <div class="container lg">
+      <h3 id="audience-heading" class="siab-heading">Voor elke starter die professioneel online wil staan.</h3>
 
       <!-- Infinite marquee: beroepsnamen scrollen rechts naar links. CSS-only. -->
       <div class="siab-marquee" aria-label="Voor deze beroepen werken wij">

@@ -19,4 +19,4 @@ pnpm astro preview --port 4322   # production server for Lighthouse / audit work
 
 ## Out of scope for this engagement
 
-Contact form, signup/login, algemene-voorwaarden, and privacy-policy pages are intentionally deferred — all CTAs that previously pointed at those pages now mailto `info@siteinabox.nl`. Once those pages ship, swap the mailto fallbacks back to real routes.
+Signup/login, algemene-voorwaarden, and privacy-policy pages are intentionally deferred — CTAs that would point at the signup/login pages currently mailto `info@siteinabox.nl`. The legal-page links in the footer and the contact-form consent text still reference `/algemene-voorwaarden` and `/privacy-policy`; swap them for mailto fallbacks or real routes once a decision is made.
