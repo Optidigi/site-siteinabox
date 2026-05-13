@@ -2,9 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/siab/Header.astro';
 import Footer from '../components/siab/Footer.astro';
+import ContactForm from '../components/forms/ContactForm.astro';
 
 const pageTitle = 'Contact';
 const pageDescription = 'Stuur Site in a Box een bericht. We lezen elk bericht en komen zo snel mogelijk bij je terug.';
+const directEmail = 'info@siteinabox.nl';
+
+const contactPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact — Site in a Box',
+  url: 'https://siteinabox.nl/contact',
+  inLanguage: 'nl',
+};
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -22,6 +32,146 @@ const pageDescription = 'Stuur Site in a Box een bericht. We lezen elk bericht e
         </div>
       </div>
     </section>
+
+    <section class="mt-50 lg-mt-30 mb-180 lg-mb-80" aria-label="Contactformulier">
+      <div class="container lg">
+        <div class="row gx-xxl-5 align-items-stretch">
+          <div class="col-lg-7 d-flex mt-30 lg-mt-30">
+            <ContactForm />
+          </div>
+          <div class="col-lg-5 d-flex mt-30 lg-mt-30">
+            <aside class="siab-contact-info" aria-label="Direct contact">
+              <h2 class="siab-contact-info__heading">Of bereik ons direct</h2>
+
+              <a class="siab-contact-info__row" href={`mailto:${directEmail}`}>
+                <span class="siab-contact-info__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="m3 7 9 6 9-6"/></svg>
+                </span>
+                <span class="siab-contact-info__text">
+                  <span class="siab-contact-info__title">Stuur een mail</span>
+                  <span class="siab-contact-info__value">{directEmail}</span>
+                </span>
+              </a>
+
+              <div class="siab-contact-info__divider" aria-hidden="true"></div>
+
+              <p class="siab-contact-info__reassure m0">Online binnen 3 werkdagen. Alleen betalen als je tevreden bent.</p>
+
+              <p class="siab-contact-info__identity m0">Site in a Box VOF &middot; Roermond</p>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <Footer />
+
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(contactPageJsonLd)} />
 </BaseLayout>
+
+<style>
+  .siab-contact-info {
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 0;
+    padding: clamp(24px, 4vw, 40px);
+    box-shadow: 5px 5px #000;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .siab-contact-info__heading {
+    font-family: 'Familjen Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(22px, 2.4vw, 28px);
+    letter-spacing: -0.01em;
+    color: #000;
+    margin: 0 0 20px;
+  }
+
+  .siab-contact-info__row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    border: 2px solid #000;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    transition: transform .12s, box-shadow .12s;
+    box-shadow: 4px 4px #000;
+  }
+  .siab-contact-info__row:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px #000;
+  }
+  .siab-contact-info__row:focus-visible {
+    outline: 3px solid #000;
+    outline-offset: 3px;
+  }
+
+  .siab-contact-info__icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #06b4ff;
+    color: #000;
+    border: 2px solid #000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .siab-contact-info__icon svg { width: 22px; height: 22px; }
+
+  .siab-contact-info__text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .siab-contact-info__title {
+    font-family: 'Familjen Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 2px;
+  }
+  .siab-contact-info__value {
+    font-family: 'Chivo', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    color: #000000bf;
+    word-break: break-word;
+  }
+
+  .siab-contact-info__divider {
+    height: 2px;
+    background: #000;
+    margin: 24px 0;
+    opacity: 0.15;
+  }
+
+  .siab-contact-info__reassure {
+    font-family: 'Chivo', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #000;
+    margin-bottom: 16px !important;
+  }
+
+  .siab-contact-info__identity {
+    font-family: 'Chivo', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #5a504b;
+    margin-top: auto;
+  }
+
+  @media (max-width: 991px) {
+    .siab-contact-info { box-shadow: 4px 4px #000; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .siab-contact-info__row { transition: none; }
+  }
+</style>
