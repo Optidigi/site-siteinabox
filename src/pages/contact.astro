@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/siab/Header.astro';
+import Footer from '../components/siab/Footer.astro';
+
+const pageTitle = 'Contact';
+const pageDescription = 'Stuur Site in a Box een bericht. We lezen elk bericht en komen zo snel mogelijk bij je terug.';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+  <main>
+    <section class="mt-180 lg-mt-80" aria-labelledby="contact-heading">
+      <div class="container lg">
+        <div class="row">
+          <div class="col-xl-7 col-lg-9 m-auto text-center">
+            <div class="title-eleven mb-30 lg-mb-10">
+              <h1 id="contact-heading">Stuur ons een bericht.</h1>
+            </div>
+            <p class="fs-22 text-dark opacity-75 m0">Een vraag, een idee, of gewoon even sparren? We lezen elk berichtje.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
