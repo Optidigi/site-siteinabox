@@ -1,6 +1,8 @@
 ---
 import { site } from '../../content/site';
 
+const email = site.nap?.email ?? 'info@siteinabox.nl';
+
 const data = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -8,6 +10,15 @@ const data = {
   url: `https://${site.primaryDomain}`,
   description: site.description,
   sameAs: Object.values(site.socials).filter(Boolean),
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      email,
+      areaServed: site.serviceArea ?? ['NL'],
+      availableLanguage: ['Dutch'],
+    },
+  ],
 };
 ---
 

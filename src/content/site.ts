@@ -48,5 +48,6 @@ export const site: SiteConfig = {
   nav: [
     { label: 'Hoe het werkt', href: '#zo-werkt-het' },
     { label: 'Prijzen', href: '#prijzen' },
+    { label: 'Contact', href: '/contact' },
   ],
 };

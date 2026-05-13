@@ -13,7 +13,13 @@ import '../styles/theme/siab-overrides.css';
 // hashed URL to put in <script src>.
 import jqueryUrl from '../scripts/jquery.min.js?url';
 import slickUrl from '../scripts/slick.min.js?url';
-import lottiePlayerUrl from '../scripts/lottie-player.min.js?url';
+
+// Lottie player: lottie-web's SVG-only "light" build. SVG renders crisply
+// at any zoom/scale (no canvas bitmap fuzziness) and the _light variant
+// drops Canvas + HTML renderers + the expression engine, cutting the
+// payload roughly in half vs the full build. Loaded via a client-side
+// <script> tag below — the package references browser globals at module
+// load, which break during Astro's SSR/static build.
 
 import Seo from '../components/seo/Seo.astro';
 import JsonLdOrganization from '../components/seo/JsonLdOrganization.astro';
@@ -50,23 +56,19 @@ const { title, description, ogImage, noindex } = Astro.props;
          emits hashed <link> tags automatically. -->
 
     <!-- Preload hero rocket Lottie JSON so it starts downloading in parallel with
-         HTML parsing instead of waiting for the deferred lottie-player.min.js to
-         fetch it. Lottie player picks it up from cache when it boots. Shaves
-         ~200-500ms off LCP without changing visuals. -->
+         HTML parsing instead of waiting for the dotlottie-wc bundle to fetch it.
+         The player picks it up from cache when it boots. Shaves ~200-500ms off
+         LCP without changing visuals. -->
     <link rel="preload" href="/theme/lottie/rocket-siab.json" as="fetch" crossorigin />
 
-    <!-- Trimmed Google Fonts: only the families actually rendered by .font-test-familjen + .font-Playfair -->
+    <!-- Trimmed Google Fonts: only the families actually rendered by .font-test-familjen. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;900&family=Familjen+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;900&family=Familjen+Grotesk:wght@400;500;600;700&display=swap"
     />
 
-    <!-- Gordita (body font) — vendored locally in /theme/fonts/gordita/.
-         Loaded via plain <link> rather than CSS @import to avoid the bundler
-         trying to module-resolve the public/ asset path. -->
-    <link rel="stylesheet" href="/theme/fonts/gordita/stylesheet.css" />
   </head>
   <body class="font-test-familjen">
     <div class="main-page-wrapper">
@@ -257,16 +259,33 @@ const { title, description, ogImage, noindex } = Astro.props;
       })();
     </script>
 
-    <!-- Vendor JS — only what's still required (jQuery for Slick, Slick for
-         the testimonial carousel, Lottie player for the hero rocket).
+    <!-- Vendor JS — jQuery for Slick, Slick for the testimonial carousel.
          Bootstrap-bundle was dropped: collapse + tab are handled in the inline
          script above, tooltips are pure CSS (siab-overrides.css).
          WOW + theme.js were dropped earlier this commit. -->
     <script is:inline defer src={jqueryUrl}></script>
     <script is:inline defer src={slickUrl}></script>
-    <script is:inline defer src={lottiePlayerUrl}></script>
 
-    <!-- Slick init + reduced-motion Lottie + slick aria-hidden-focus fix -->
+    <!-- Hero Lottie via lottie-web's SVG-only light build. No is:inline → Vite
+         bundles as a client module so browser globals don't run during SSR.
+         SVG renderer = crisp at any DPI/scale (unlike canvas-based players). -->
+    <script>
+      import lottie from 'lottie-web/build/player/lottie_light.min.js';
+
+      const container = document.getElementById('hero-rocket');
+      if (container) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        lottie.loadAnimation({
+          container,
+          renderer: 'svg',
+          loop: !reduce,
+          autoplay: !reduce,
+          path: '/theme/lottie/rocket-siab.json',
+        });
+      }
+    </script>
+
+    <!-- Slick init + slick aria-hidden-focus fix -->
     <script is:inline>
       window.addEventListener('load', function () {
         if (window.jQuery && window.jQuery.fn.slick) {
@@ -286,13 +305,6 @@ const { title, description, ogImage, noindex } = Astro.props;
               { breakpoint: 768, settings: { slidesToShow: 2 } },
               { breakpoint: 576, settings: { slidesToShow: 1 } },
             ],
-          });
-        }
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          document.querySelectorAll('lottie-player').forEach(function (el) {
-            el.removeAttribute('autoplay');
-            el.removeAttribute('loop');
-            if (typeof el.stop === 'function') el.stop();
           });
         }
         var stripSlickTabindex = function () {
