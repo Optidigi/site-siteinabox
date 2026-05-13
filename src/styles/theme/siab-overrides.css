@@ -148,3 +148,73 @@
   ::view-transition-old(root),
   ::view-transition-new(root){animation:none}
 }
+
+/* ============================================================
+   DARK-MODE COMPONENT OVERRIDES (where a token swap isn't enough)
+   ============================================================ */
+
+/* Cards / pricing / FAQ surfaces: drop the heavy shadow in dark mode and
+   lean on borders. Soft-white shadows on dark plum cards look weak; black
+   shadows would be invisible. Covers explicit override AND system mode. */
+[data-theme="dark"] .font-test-familjen :is(
+  .hero-cards-strip .card-style-eleven,
+  .block-feature-twentyFour .card-style-eleven,
+  .pricing-section-six .pr-column,
+  .faq-section-three .accordion-style-two,
+  .faq-section-three .accordion-style-two .accordion-item,
+  .faq-section-three .accordion-button,
+  .faq-section-three .accordion-body
+){box-shadow:none;background:var(--siab-bg-surface)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .font-test-familjen :is(
+    .hero-cards-strip .card-style-eleven,
+    .block-feature-twentyFour .card-style-eleven,
+    .pricing-section-six .pr-column,
+    .faq-section-three .accordion-style-two,
+    .faq-section-three .accordion-style-two .accordion-item,
+    .faq-section-three .accordion-button,
+    .faq-section-three .accordion-body
+  ){box-shadow:none;background:var(--siab-bg-surface)}
+}
+
+/* btn-eighteen (yellow CTA) keeps a soft black shadow under the yellow even
+   in dark mode — soft-white over yellow reads as flat. */
+[data-theme="dark"] .font-test-familjen .btn-eighteen{box-shadow:5px 5px rgba(0,0,0,0.4)}
+[data-theme="dark"] .font-test-familjen .btn-eighteen:hover{box-shadow:3px 3px rgba(0,0,0,0.4)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .font-test-familjen .btn-eighteen{box-shadow:5px 5px rgba(0,0,0,0.4)}
+  :root:not([data-theme="light"]) .font-test-familjen .btn-eighteen:hover{box-shadow:3px 3px rgba(0,0,0,0.4)}
+}
+
+/* ============================================================
+   FORCED-COLORS (Windows High Contrast) — WCAG 2.4.11
+   box-shadow is suppressed by the OS; rely on border + system colors
+   so focus rings and depth cues survive.
+   ============================================================ */
+@media (forced-colors: active){
+  .font-test-familjen :is(
+    .hero-cards-strip .card-style-eleven,
+    .block-feature-twentyFour .card-style-eleven,
+    .pricing-section-six .pr-column,
+    .faq-section-three .accordion-style-two,
+    .btn-eighteen,
+    .pricing-section-six .pr-column .btn-eleven,
+    .siab-theme-toggle
+  ){box-shadow:none;border:2px solid ButtonText;forced-color-adjust:none}
+  .font-test-familjen :is(a,button,input,.accordion-button,.nav-link):focus-visible{outline:3px solid Highlight;outline-offset:3px}
+}
+
+/* ============================================================
+   PREFERS-CONTRAST: MORE — boost border thickness for users who
+   opted into the OS "more contrast" preference (separate from dark mode).
+   ============================================================ */
+@media (prefers-contrast: more){
+  .font-test-familjen :is(
+    .hero-cards-strip .card-style-eleven,
+    .block-feature-twentyFour .card-style-eleven,
+    .pricing-section-six .pr-column,
+    .faq-section-three .accordion-style-two,
+    .btn-eighteen,
+    .siab-theme-toggle
+  ){border-width:3px}
+}
