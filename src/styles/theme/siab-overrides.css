@@ -158,34 +158,6 @@ body{background:#ffffff;color:var(--siab-text)}
 .font-test-familjen .feedback-section-nine{background:var(--siab-bg-purple)}
 .font-test-familjen .block-feature-twentyFour{background:var(--siab-bg-purple);display:flow-root;padding-top:clamp(40px,5vh,72px)}
 
-/* Pricing card internals — the theme bundle hard-codes color:#000 on every
-   text inside .pr-column (plane-name, price, save-line, package-feature li, h6,
-   etc.). They sit on a now-dark surface in dark mode, so they need to flip.
-   Mirror the rule under prefers-color-scheme: dark for system mode too. */
-[data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column :is(
-  .plane-name,
-  .price,
-  .price sub,
-  .plan-tagline,
-  .info2,
-  .package-feature li,
-  h6,
-  .pricing-section-heading,
-  .plus-header
-){color:var(--siab-text)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column :is(
-    .plane-name,
-    .price,
-    .price sub,
-    .plan-tagline,
-    .info2,
-    .package-feature li,
-    h6,
-    .pricing-section-heading,
-    .plus-header
-  ){color:var(--siab-text)}
-}
 
 /* Bootstrap utility flippers — .text-dark and .border-dark are !important
    literals (#212529) in bootstrap.min.css, unreachable via CSS variables.
@@ -275,20 +247,6 @@ body{background:#ffffff;color:var(--siab-text)}
   :root:not([data-theme="light"]) .font-test-familjen :is(h1,h2,h3,h4,h5,h6){color:var(--siab-text)}
 }
 
-/* --- Sticky header in dark: theme bundle sets .fixed{background:#fff} =
-   instant flashbang on dark. Reference Dark uses #11061c + soft border + soft shadow. --- */
-[data-theme="dark"] .font-test-familjen .theme-main-menu.fixed{
-  background:#2a0e22;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  box-shadow:0 13px 35px rgba(0,0,0,0.4)
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu.fixed{
-    background:#2a0e22;
-    border-bottom:1px solid rgba(255,255,255,0.06);
-    box-shadow:0 13px 35px rgba(0,0,0,0.4)
-  }
-}
 
 /* Bento grid block colors — final uniform-dark treatment lives in the round-8
    block below (all four blocks become translucent-white-on-plum with consistent
@@ -336,9 +294,6 @@ body{background:#ffffff;color:var(--siab-text)}
   background:var(--siab-bg-surface);
   border-top-color:rgba(255,255,255,0.1)
 }
-[data-theme="dark"] .font-test-familjen .faq-section-three .accordion-body :is(p,.fs-22){
-  color:rgba(255,255,255,0.7)
-}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-style-two{background:var(--siab-bg-page)}
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-style-two .accordion-item{background:var(--siab-bg-surface);border-bottom:2px solid var(--siab-border)}
@@ -346,7 +301,6 @@ body{background:#ffffff;color:var(--siab-text)}
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button:not(.collapsed){background:#ffd80b;color:#000}
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button:after{filter:invert(1)}
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-body{background:var(--siab-bg-surface);border-top-color:rgba(255,255,255,0.1)}
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-body :is(p,.fs-22){color:rgba(255,255,255,0.7)}
 }
 
 /* --- Trust-trio block-feature-twentyFive border-dark + h3 + p colors in dark --- */
@@ -369,9 +323,6 @@ body{background:#ffffff;color:var(--siab-text)}
    global color:#000 → var(--siab-text) replace broke this in dark). */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended:after,
 :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended:after{color:#000}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended:after{color:#000}
-}
 
 /* btn-eleven dark — final styling lives in the round-8 block below
    (transparent bg + white text + soft-white border, mirrors light's hover mechanic
@@ -419,13 +370,6 @@ body{background:#ffffff;color:var(--siab-text)}
   :root:not([data-theme="light"]) .font-test-familjen .feedback-section-nine .slick-center .feedback-block{background:rgba(255,255,255,0.08)}
 }
 
-/* Bento block-three is INTENTIONALLY a fixed light-blue card (per reference).
-   Black text inside must stay black even in dark mode — undo our heading +
-   .text-dark utility flippers within this scope. */
-[data-theme="dark"] .font-test-familjen .block-feature-twentySix .block-three :is(h3,blockquote,.text-dark,.color-dark){color:#000!important}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .block-feature-twentySix .block-three :is(h3,blockquote,.text-dark,.color-dark){color:#000!important}
-}
 
 /* Removed previous filter:invert hack for icons — replaced with proper
    SVG file swaps below (the reference ships dedicated dark-variant files). */
@@ -443,9 +387,9 @@ body{background:#ffffff;color:var(--siab-text)}
 }
 
 /* Sticky header .fixed — match reference values exactly (was #2a0e22 / softer shadow) */
-[data-theme="dark"] .font-test-familjen .theme-main-menu.fixed{background:#11061c;box-shadow:0 13px 35px rgba(42,33,114,0.1);border-bottom:1px solid rgba(255,255,255,0.05)}
+[data-theme="dark"] .font-test-familjen .theme-main-menu.fixed{background:#2a0e22;box-shadow:0 13px 35px rgba(42,33,114,0.1);border-bottom:1px solid rgba(255,255,255,0.05)}
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu.fixed{background:#11061c;box-shadow:0 13px 35px rgba(42,33,114,0.1);border-bottom:1px solid rgba(255,255,255,0.05)}
+  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu.fixed{background:#2a0e22;box-shadow:0 13px 35px rgba(42,33,114,0.1);border-bottom:1px solid rgba(255,255,255,0.05)}
 }
 
 /* Nav links + login button explicit #fff in dark (was getting muted via token) */
@@ -463,20 +407,11 @@ body{background:#ffffff;color:var(--siab-text)}
 /* Pricing tabs container — final treatment lives in the round-8 block below
    (uses --siab-border-soft + tactile raised/lowered shadows). */
 
-/* Pricing column .pr-column: reference Dark uses transparent bg + 3px white border. */
-[data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column{background:transparent}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column{background:transparent}
-}
 
 /* Pricing text colors: #fff in dark. Reference rules at lines 6298, 6309, 6343, 6349. */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column :is(.price,.price sub,.plane-name,.plan-tagline,.info2,.package-feature li,h6,.pricing-section-heading,.plus-header){color:#fff}
-[data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column h6,
-[data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .pricing-section-heading{border-bottom-color:#fff}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column :is(.price,.price sub,.plane-name,.plan-tagline,.info2,.package-feature li,h6,.pricing-section-heading,.plus-header){color:#fff}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column h6,
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .pricing-section-heading{border-bottom-color:#fff}
 }
 
 /* btn-eleven final styling lives in the round-8 block below (no border-color or
@@ -517,14 +452,6 @@ body{background:#ffffff;color:var(--siab-text)}
   :root:not([data-theme="light"]) .font-test-familjen .footer-three.dark-version{background:#190713}
 }
 
-/* Hero illustration: reference Dark repositions to top:0, max-width:51%, z-index:-1,
-   no transform / aspect-ratio. Only applies at desktop (matches existing illustration scope). */
-@media (width>=992px){
-  [data-theme="dark"] .font-test-familjen .hero-banner-nine .illustration{top:0;max-width:51%;width:auto;z-index:-1;aspect-ratio:auto;transform:none;align-items:flex-start;justify-content:center}
-}
-@media (width>=992px) and (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .hero-banner-nine .illustration{top:0;max-width:51%;width:auto;z-index:-1;aspect-ratio:auto;transform:none;align-items:flex-start;justify-content:center}
-}
 
 /* ============================================================
    DARK-MODE FIXES (round 5) — design + UX consultation findings:
@@ -614,18 +541,12 @@ body{background:#ffffff;color:var(--siab-text)}
 }
 
 /* Promise-card icon circle in dark: keep light's 2px border (using soft-white token
-   so it matches the rest of the dark border treatment), keep the colored bg. */
+   so it matches the rest of the dark border treatment). */
 [data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-circle{border:2px solid var(--siab-border-soft);width:55px;height:55px}
 [data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-circle img{width:28px;height:28px}
-[data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-cyan{background:#06b4ff!important}
-[data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-orange{background:#f96a00!important}
-[data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-green{background:#00c592!important}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-circle{border:2px solid var(--siab-border-soft);width:55px;height:55px}
   :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-circle img{width:28px;height:28px}
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-cyan{background:#06b4ff!important}
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-orange{background:#f96a00!important}
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-green{background:#00c592!important}
 }
 
 /* --- Trust trio in dark: mirrors reference Dark icon_50/51/52 structure exactly.
@@ -642,14 +563,11 @@ body{background:#ffffff;color:var(--siab-text)}
 [data-theme="dark"] .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-yellow:after{border:2px solid #f5e900}
 [data-theme="dark"] .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-green:after{border:2px solid #00c592}
 [data-theme="dark"] .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-orange:after{border:2px solid #f96a00}
-/* Cancel previous round-6/round-7 hacks (filter / content url swap) */
-[data-theme="dark"] .font-test-familjen .card-style-twelve .card-icon-circle-twelve img{filter:none;content:normal}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve:after{background:var(--siab-bg-page);box-sizing:border-box}
   :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-yellow:after{border:2px solid #f5e900}
   :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-green:after{border:2px solid #00c592}
   :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-orange:after{border:2px solid #f96a00}
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve img{filter:none;content:normal}
 }
 
 /* --- Pricing checkmark (tabler-check.svg via :before content url): invert to white in dark --- */
@@ -663,21 +581,7 @@ body{background:#ffffff;color:var(--siab-text)}
 /* --- Pricing tabs: final active-state styling lives in the round-7/8 blocks below
    (yellow bg + tactile inset shadow for press-down feel). --- */
 
-/* Yellow CTA (.btn-eighteen) + POPULAIR badge: keep BLACK border in dark (brutalist
-   on yellow). Shadow falls onto the dark page bg, so it flows through the token
-   (lighter-than-page plum, not black-on-near-black). */
-[data-theme="dark"] .font-test-familjen .btn-eighteen{border-color:#000}
-[data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended:after{border:2px solid #000}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .btn-eighteen{border-color:#000}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended:after{border:2px solid #000}
-}
 
-/* --- Sticky header dark bg: user prefers earlier #2a0e22 over reference's #11061c --- */
-[data-theme="dark"] .font-test-familjen .theme-main-menu.fixed{background:#2a0e22}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu.fixed{background:#2a0e22}
-}
 
 /* --- Brutalist depth restored on cards via user's existing footer pattern:
    semi-transparent white border + semi-transparent white shadow (NOT pure white).
@@ -716,14 +620,12 @@ body{background:#ffffff;color:var(--siab-text)}
   }
 }
 
-/* Update pricing column border + button to use the softer token too */
+/* Update pricing column border to use the softer token too */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column h6,
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .pricing-section-heading{border-bottom-color:var(--siab-border-soft)}
-[data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .btn-eleven{border-color:var(--siab-border-soft)}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column h6,
   :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .pricing-section-heading{border-bottom-color:var(--siab-border-soft)}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .btn-eleven{border-color:var(--siab-border-soft)}
 }
 
 /* --- REVERT hero illustration dark override. Our Lottie has a different layout
