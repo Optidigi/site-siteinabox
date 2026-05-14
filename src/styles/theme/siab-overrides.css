@@ -342,8 +342,8 @@ body{background:#ffffff;color:var(--siab-text)}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-style-two{background:var(--siab-bg-page)}
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-style-two .accordion-item{background:var(--siab-bg-surface);border-bottom:2px solid var(--siab-border)}
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button{background:transparent;color:var(--siab-text)}
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button:not(.collapsed){background:rgba(255,255,255,0.05);color:var(--siab-text)}
+  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button{background:var(--siab-bg-surface);color:var(--siab-text)}
+  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button:not(.collapsed){background:#ffd80b;color:#000}
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button:after{filter:invert(1)}
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-body{background:var(--siab-bg-surface);border-top-color:rgba(255,255,255,0.1)}
   :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-body :is(p,.fs-22){color:rgba(255,255,255,0.7)}
