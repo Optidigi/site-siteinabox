@@ -161,7 +161,7 @@
 .font-test-familjen .block-feature-twentyFour .siab-heading{margin-top:0}
 /* Above-the-fold sizing.
    Mobile portrait: hero alone fills viewport; first card's bleed reset so nothing peeks (other cards keep their natural mobile spacing via md-mt-30).
-   Desktop landscape: wrapper pins to 100svh; hero stretches via flex, cards strip takes natural height; heading "Voor elke starter…" lives outside the wrapper so it is guaranteed below the fold. */
+   Desktop landscape: a two-row grid (hero / cards) pins to 100svh — the hero grows into surplus height but never shrinks below its content + header clearance; short viewports just scroll. Heading "Voor elke starter…" lives outside the wrapper so it is guaranteed below the fold. */
 @media (max-width:767px){
   /* +100px absorbs the cards' -100px bleed (.hero-cards-strip .card-style-eleven) so the first card's top lands at the viewport bottom rather than peeking in. Change both together if the bleed amount changes. */
   .font-test-familjen .hero-banner-nine{min-height:calc(100svh + 100px);display:flex;align-items:center}
@@ -178,9 +178,28 @@
 @media (max-width:991px){
   .font-test-familjen .theme-main-menu .nav-item .nav-link{padding-bottom:15px;border-bottom:0}
 }
+/* Overlay-nav clearance — single source of truth. The .theme-main-menu header
+   is position:absolute over the hero; its height is the logo (same clamp the
+   bundle uses) plus ~38px of chrome. Measured ~80-82px at common widths,
+   growing toward ~110px on very wide monitors. Drives hero top-padding AND
+   anchor-scroll offset so a jumped-to section never lands behind the header. */
+:root{--siab-header-h:calc(clamp(44px,3vw,72px) + 38px)}
+html{scroll-padding-top:calc(var(--siab-header-h) + 16px)}
+
 @media (min-width:992px) and (orientation:landscape){
-  .siab-above-fold{min-height:100svh;display:flex;flex-direction:column}
-  .font-test-familjen .siab-above-fold .hero-banner-nine{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(40px,5vh,100px)!important;padding-bottom:clamp(140px,14vh,220px)!important}
+  /* Two-row grid: row 1 (1fr) is the hero. A 1fr track's automatic minimum is
+     its content's size, so the hero can GROW into surplus viewport height but
+     never SHRINK below its own content + padding. Row 2 (auto) is the promise-
+     cards strip at natural height. When hero + cards exceed the viewport the
+     page just scrolls — the hero never crushes and the nav never overlaps the
+     H1 (padding-top always clears the header). No gap on the grid: the cards'
+     -100px bleed must still overlap the hero's bottom seamlessly. */
+  .siab-above-fold{min-height:100svh;display:grid;grid-template-rows:1fr auto}
+  .font-test-familjen .siab-above-fold .hero-banner-nine{
+    display:flex;flex-direction:column;justify-content:center;
+    padding-top:calc(var(--siab-header-h) + 28px)!important;
+    padding-bottom:clamp(160px,14svh,240px)!important
+  }
 }
 
 /* ============================================================
