@@ -41,7 +41,27 @@ const { title, description, ogImage, noindex } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#481938" />
+
+    <!-- No-flash theme init. Runs before CSS parses so data-theme is set at
+         first paint. Only writes the attribute when the user has explicitly
+         chosen light/dark; absent attribute = system mode, which flows
+         naturally through `color-scheme: light dark` + light-dark() in CSS. -->
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('siab-theme');
+          if (saved === 'light' || saved === 'dark') {
+            document.documentElement.setAttribute('data-theme', saved);
+          }
+        } catch (e) { /* private mode etc — silent */ }
+      })();
+    </script>
+
+    <!-- Paired theme-color metas drive Android URL bar + iOS PWA chrome
+         from prefers-color-scheme. Lags manual override by one navigation;
+         acceptable tradeoff vs the JS upkeep of syncing it live. -->
+    <meta name="theme-color" content="#fef3f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#250e1e" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />

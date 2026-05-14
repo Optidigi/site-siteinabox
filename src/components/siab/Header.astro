@@ -1,5 +1,6 @@
 ---
 import { site } from '../../content/site';
+import ThemeToggle from './ThemeToggle.astro';
 
 const ctaSignup = 'mailto:info@siteinabox.nl?subject=Start%20gratis';
 const ctaLogin = 'mailto:info@siteinabox.nl?subject=Inloggen';
@@ -16,6 +17,9 @@ const ctaLogin = 'mailto:info@siteinabox.nl?subject=Inloggen';
         </div>
         <div class="right-widget ms-auto order-lg-3">
           <ul class="d-flex align-items-center style-none">
+            <li class="me-3">
+              <ThemeToggle />
+            </li>
             <li>
               <a href={ctaLogin} class="login-btn-one">Inloggen</a>
             </li>
