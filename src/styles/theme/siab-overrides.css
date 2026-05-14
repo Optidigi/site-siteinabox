@@ -137,10 +137,13 @@
 /* Body: in light, WHITE (matches reference — only the hero has the cream-pink;
    pricing/FAQ/trust-trio/etc. show through to white body). In dark, dark plum
    so the same sections show through to the dark page color. */
+/* Body bg: white in LIGHT (only the hero section uses the cream-pink page-bg
+   token), lifted plum in DARK (matches the page-bg token). Can't collapse to
+   one token rule without breaking the light-mode "white body + cream hero" split. */
 body{background:#ffffff;color:var(--siab-text)}
-[data-theme="dark"] body{background:#3a1a30}
+[data-theme="dark"] body{background:var(--siab-bg-page)}
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) body{background:#3a1a30}
+  :root:not([data-theme="light"]) body{background:var(--siab-bg-page)}
 }
 
 /* Re-anchor bundled-theme background literals (style.css hard-codes #fef3f4 / #481938) */
@@ -681,7 +684,7 @@ body{background:#ffffff;color:var(--siab-text)}
    already in the codebase (line 82: #fff9 border + #fff3 shadow). --- */
 [data-theme="dark"] .font-test-familjen .hero-cards-strip .card-style-eleven,
 [data-theme="dark"] .font-test-familjen .block-feature-twentyFour .card-style-eleven{
-  background:#5a3a50;
+  background:var(--siab-bg-surface);
   border:2px solid var(--siab-border-soft);
   box-shadow:5px 5px var(--siab-shadow-soft)
 }
