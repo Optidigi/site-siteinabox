@@ -151,7 +151,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
   .siab-field input:focus-visible,
   .siab-field select:focus-visible,
   .siab-field textarea:focus-visible {
-    outline: 3px solid var(--siab-border);
+    outline: 3px solid var(--siab-focus-ring);
     outline-offset: 3px;
   }
 
@@ -202,7 +202,7 @@ const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
     cursor: pointer;
   }
   .siab-field--consent input[type='checkbox']:focus-visible {
-    outline: 3px solid var(--siab-border);
+    outline: 3px solid var(--siab-focus-ring);
     outline-offset: 3px;
   }
   .siab-field--consent a { color: var(--siab-text); text-decoration: underline 2px dashed var(--siab-text-muted); text-underline-offset: 3px; }

@@ -177,7 +177,7 @@ const contactPageJsonLd = {
     text-underline-offset: 4px;
   }
   .siab-info-row:focus-visible {
-    outline: 3px solid var(--siab-border);
+    outline: 3px solid var(--siab-focus-ring);
     outline-offset: 3px;
   }
 
@@ -238,7 +238,7 @@ const contactPageJsonLd = {
     text-underline-offset: 4px;
   }
   .siab-info-social:focus-visible {
-    outline: 3px solid var(--siab-border);
+    outline: 3px solid var(--siab-focus-ring);
     outline-offset: 3px;
   }
 
@@ -272,7 +272,8 @@ const contactPageJsonLd = {
     color: var(--siab-text);
   }
   .siab-trust-perks svg {
-    color: var(--siab-text);
+    /* Check stroke stays black in both themes — the circle is yellow in light AND dark. */
+    color: #000;
     flex-shrink: 0;
     background: #f5e900;
     border: 2px solid var(--siab-border);

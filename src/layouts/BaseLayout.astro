@@ -43,17 +43,26 @@ const { title, description, ogImage, noindex } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- No-flash theme init. Runs before CSS parses so data-theme is set at
-         first paint. Only writes the attribute when the user has explicitly
-         chosen light/dark; absent attribute = system mode, which flows
-         naturally through `color-scheme: light dark` + light-dark() in CSS. -->
+         first paint. Source of truth for the theme: ALWAYS writes a resolved
+         data-theme="light"|"dark" to <html> — explicit choices from
+         localStorage, otherwise prefers-color-scheme. This lets every dark
+         CSS rule use a single [data-theme="dark"] selector with no
+         @media (prefers-color-scheme: dark) mirror. -->
     <script is:inline>
       (function () {
+        var resolved;
         try {
           var saved = localStorage.getItem('siab-theme');
           if (saved === 'light' || saved === 'dark') {
-            document.documentElement.setAttribute('data-theme', saved);
+            resolved = saved;
           }
         } catch (e) { /* private mode etc — silent */ }
+        if (!resolved) {
+          resolved = (window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', resolved);
       })();
     </script>
 

@@ -50,7 +50,7 @@ const year = new Date().getFullYear();
     <!-- /.address-wrapper -->
     <div class="position-relative">
       <div class="row justify-content-between">
-        <div class="col-lg-3 order-lg-0 md-mb-40">
+        <div class="col-lg-3 order-lg-0">
           <div class="logo mt-15">
             <a href="/" aria-label="Site in a Box — naar homepage">
               <img src="/theme/images/logo/siab_logo_dark.svg" alt="Site in a Box" />
@@ -72,17 +72,18 @@ const year = new Date().getFullYear();
             </li>
           </ul>
         </div>
-        <div class="col-lg-3 col-md-4 col-6 order-lg-1">
+        <div class="col-lg-3 col-md-4 order-lg-1">
           <div class="footer-nav">
             <div class="fs-6 text-white mb-15">Navigatie</div>
             <ul class="footer-nav-link style-none">
-              <li><a href="#zo-werkt-het">Hoe het werkt</a></li>
-              <li><a href="#prijzen">Prijzen</a></li>
+              {/* Root-absolute: these sections live on the homepage. #faq stays page-local — FaqSection renders on every page. */}
+              <li><a href="/#zo-werkt-het">Hoe het werkt</a></li>
+              <li><a href="/#prijzen">Prijzen</a></li>
               <li><a href="#faq">Veelgestelde vragen</a></li>
             </ul>
           </div>
         </div>
-        <div class="col-lg-3 col-md-4 col-6 order-lg-2">
+        <div class="col-lg-3 col-md-4 order-lg-2">
           <div class="footer-nav">
             <div class="fs-6 text-white mb-15">Contact</div>
             <ul class="footer-nav-link style-none">
@@ -92,7 +93,7 @@ const year = new Date().getFullYear();
             </ul>
           </div>
         </div>
-        <div class="col-lg-2 col-md-4 col-6 order-lg-3">
+        <div class="col-lg-2 col-md-4 order-lg-3">
           <div class="footer-nav">
             <div class="fs-6 text-white mb-15">Juridisch</div>
             <ul class="footer-nav-link style-none">
