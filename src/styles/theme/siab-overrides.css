@@ -64,7 +64,6 @@
     --siab-pricing-microcopy-fg:     light-dark(#595959, rgba(255,255,255,0.55));
     --siab-pricing-save-bg:          light-dark(#eaf5fc, #5e224a);
     --siab-pricing-save-fg:          light-dark(#000000, #ffffff);
-    --siab-faq-divider:              light-dark(rgba(0,0,0,0.12), rgba(255,255,255,0.1));
     --siab-footer-card-shadow-color: light-dark(rgba(255,255,255,0.2), #5a2b46);
     --siab-feedback-border:          light-dark(#ffffff, rgba(255,255,255,0.08));
     --siab-feedback-center-bg:       light-dark(transparent, rgba(255,255,255,0.08));
@@ -104,7 +103,6 @@
     --siab-pricing-microcopy-fg:     #595959;
     --siab-pricing-save-bg:          #eaf5fc;
     --siab-pricing-save-fg:          #000000;
-    --siab-faq-divider:              rgba(0,0,0,0.12);
     --siab-footer-card-shadow-color: rgba(255,255,255,0.2);
     --siab-feedback-border:          #ffffff;
     --siab-feedback-center-bg:       transparent;
@@ -138,7 +136,6 @@
     --siab-pricing-microcopy-fg:     rgba(255,255,255,0.55);
     --siab-pricing-save-bg:          #5e224a;
     --siab-pricing-save-fg:          #ffffff;
-    --siab-faq-divider:              rgba(255,255,255,0.1);
     --siab-footer-card-shadow-color: #5a2b46;
     --siab-feedback-border:          rgba(255,255,255,0.08);
     --siab-feedback-center-bg:       rgba(255,255,255,0.08);
