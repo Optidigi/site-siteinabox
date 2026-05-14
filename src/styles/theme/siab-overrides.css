@@ -1,8 +1,12 @@
 /* ============================================================
    COLOR TOKENS — light / dark / system theme switcher
-   Driven by `color-scheme` on <html>; modern path uses light-dark(),
-   older browsers fall back to prefers-color-scheme + [data-theme="dark"].
-   See docs/superpowers/plans/2026-05-13-dark-mode.md for the full design.
+   Single source of truth: the no-flash inline script in BaseLayout
+   always resolves the theme and writes data-theme="light"|"dark" to
+   <html> (System mode resolves via prefers-color-scheme at load +
+   a matchMedia listener). So every rule below needs only a single
+   [data-theme="dark"] selector — no prefers-color-scheme mirror.
+   Modern path uses light-dark() driven by color-scheme; browsers
+   without light-dark() fall back to the @supports-not block.
    ============================================================ */
 
 :root            { color-scheme: light dark; }   /* default: follow OS */
@@ -47,10 +51,10 @@
     --siab-form-err-bg: light-dark(#fef2f4, rgba(200,16,46,0.15));
 
     /* ============================================================
-       Bucket B tokens — component values that differ between modes.
-       Each pairs the LIGHT bundled-theme literal with the DARK override
-       value so component rules consume one token instead of needing a
-       separate [data-theme="dark"] override + prefers-color-scheme mirror.
+       Component tokens — values that differ between modes. Each pairs
+       the LIGHT bundled-theme literal with the DARK value so a single
+       always-on component rule consumes one token instead of needing
+       a separate [data-theme="dark"] override.
        ============================================================ */
     --siab-body-bg:                  light-dark(#ffffff, #3a1a30);
     --siab-body-fg:                  light-dark(#000000, rgba(255,255,255,0.7));
@@ -268,10 +272,12 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
 }
 
 /* ============================================================
-   DARK-MODE COMPREHENSIVE FIXES (round 2)
-   Based on reference Piku Dark index-9 analysis. Two paths covered
-   for every rule: explicit [data-theme="dark"] AND system mode
-   :root:not([data-theme="light"]) under prefers-color-scheme: dark.
+   DARK-MODE COMPONENT OVERRIDES — single [data-theme="dark"] path.
+   Rules here change something a light-dark() token can't express
+   (image/logo swaps, filter inverts, structural/layout property
+   changes, multi-value border/shadow changes, or full inversions
+   entangled with non-color props). Pure color pairs live in the
+   token block above instead.
    ============================================================ */
 
 /* --- Headings: theme bundle sets h1-h6 {color:#000}. Override only in dark
