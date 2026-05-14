@@ -544,7 +544,7 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
 
 /* Form select chevron — hardcoded black SVG data-URI in ContactForm.astro.
    Swap to a white-stroked version in dark mode. */
-[data-theme="dark"] .font-test-familjen .siab-field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1l5 5 5-5'/></svg>")}
+html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1l5 5 5-5'/></svg>")}
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .font-test-familjen .siab-field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1l5 5 5-5'/></svg>")}
 }
