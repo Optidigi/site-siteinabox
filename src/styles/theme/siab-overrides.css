@@ -219,14 +219,9 @@
 /* Body: in light, WHITE (matches reference — only the hero has the cream-pink;
    pricing/FAQ/trust-trio/etc. show through to white body). In dark, dark plum
    so the same sections show through to the dark page color. */
-/* Body bg: white in LIGHT (only the hero section uses the cream-pink page-bg
-   token), lifted plum in DARK (matches the page-bg token). Can't collapse to
-   one token rule without breaking the light-mode "white body + cream hero" split. */
-body{background:#ffffff;color:var(--siab-text)}
-[data-theme="dark"] body{background:var(--siab-bg-page)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) body{background:var(--siab-bg-page)}
-}
+/* Body — bg + fg both flow through light-dark() color tokens.
+   Light: #fff / #000. Dark: lifted plum #3a1a30 / muted-white. */
+body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
 
 /* Re-anchor bundled-theme background literals (style.css hard-codes #fef3f4 / #481938) */
 .font-test-familjen .hero-banner-nine{background:var(--siab-bg-page)}
@@ -234,15 +229,11 @@ body{background:#ffffff;color:var(--siab-text)}
 .font-test-familjen .block-feature-twentyFour{background:var(--siab-bg-purple);display:flow-root;padding-top:clamp(40px,5vh,72px)}
 
 
-/* Bootstrap utility flippers — .text-dark and .border-dark are !important
-   literals (#212529) in bootstrap.min.css, unreachable via CSS variables.
-   Override under our scope with !important to match. */
-[data-theme="dark"] .font-test-familjen .text-dark{color:var(--siab-text)!important}
-[data-theme="dark"] .font-test-familjen .border-dark{border-color:var(--siab-border)!important}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .text-dark{color:var(--siab-text)!important}
-  :root:not([data-theme="light"]) .font-test-familjen .border-dark{border-color:var(--siab-border)!important}
-}
+/* Bootstrap utility flippers — always-on via light-dark() color tokens.
+   Light values (#212529) match Bootstrap's own .text-dark/.border-dark
+   literal so light mode is unchanged; dark resolves to #fff / #000. */
+.font-test-familjen .text-dark{color:var(--siab-text-dark-util)!important}
+.font-test-familjen .border-dark{border-color:var(--siab-border-dark-util)!important}
 
 /* Lock text-on-yellow to black in both modes (yellow CTAs stay yellow).
    Note: the .btn-eleven .icon flips to BLACK bg on hover with a YELLOW chevron
@@ -455,12 +446,6 @@ body{background:#ffffff;color:var(--siab-text)}
    Every selector below maps directly to the reference Piku Dark style.css.
    ============================================================ */
 
-/* Body color in dark = rgba(255,255,255,0.7) per reference (line 1648).
-   Our --siab-text in dark = #fff (for headings); body needs the muted variant. */
-[data-theme="dark"] body{color:var(--siab-text-muted)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) body{color:var(--siab-text-muted)}
-}
 
 /* Sticky header .fixed — match reference values exactly (was #2a0e22 / softer shadow) */
 [data-theme="dark"] .font-test-familjen .theme-main-menu.fixed{background:#2a0e22;box-shadow:0 13px 35px rgba(42,33,114,0.1);border-bottom:1px solid rgba(255,255,255,0.05)}
