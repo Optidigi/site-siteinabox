@@ -272,7 +272,8 @@ const contactPageJsonLd = {
     color: var(--siab-text);
   }
   .siab-trust-perks svg {
-    color: var(--siab-text);
+    /* Check stroke stays black in both themes — the circle is yellow in light AND dark. */
+    color: #000;
     flex-shrink: 0;
     background: #f5e900;
     border: 2px solid var(--siab-border);
