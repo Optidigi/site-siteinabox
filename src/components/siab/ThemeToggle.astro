@@ -11,8 +11,8 @@
   type="button"
   class="siab-theme-toggle"
   data-siab-theme-toggle
-  aria-label="Wissel modus: systeem, licht of donker"
-  title="Wissel modus"
+  aria-label="Thema: systeem (klik voor licht)"
+  title="Systeem (klik voor licht)"
 >
   <svg class="siab-theme-toggle__icon siab-theme-toggle__icon--system" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <rect x="3" y="4" width="18" height="12" rx="1" />
@@ -25,10 +25,14 @@
   <svg class="siab-theme-toggle__icon siab-theme-toggle__icon--dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
   </svg>
-  <span class="visually-hidden" data-siab-theme-label>Systeem</span>
+  <span class="visually-hidden" data-siab-theme-label aria-live="polite">Systeem</span>
 </button>
 
 <style>
+  /* Ghost icon-only utility button — sits among nav links and Inloggen as "quiet
+     chrome", lets the yellow CTA monopolize loud visual weight. Pattern mirrors
+     shadcn/Linear/Vercel navbars; in our brutalist context the yellow hover fill
+     keeps the brand language without competing with the CTA at rest. */
   .siab-theme-toggle {
     display: inline-flex;
     align-items: center;
@@ -37,11 +41,18 @@
     height: 40px;
     padding: 0;
     background: transparent;
-    border: 2px solid var(--siab-border);
+    border: 0;
     border-radius: 0;
     color: var(--siab-text);
     cursor: pointer;
     transition: background .12s, color .12s;
+  }
+  /* WCAG 2.5.5: touch pointers get a 44x44 hit area while the visual stays 40x40. */
+  @media (pointer: coarse) {
+    .siab-theme-toggle {
+      width: 44px;
+      height: 44px;
+    }
   }
   .siab-theme-toggle:hover {
     background: var(--siab-accent-yellow);
@@ -62,9 +73,10 @@
     .siab-theme-toggle { transition: none; }
   }
 
-  /* Forced-colors: keep just the border (box-shadow is suppressed by the OS). */
+  /* Forced-colors: hover bg + focus outline use system Highlight color. Icon
+     stroke uses currentColor which the OS maps to ButtonText. */
   @media (forced-colors: active) {
-    .siab-theme-toggle { border-color: ButtonText; }
+    .siab-theme-toggle:hover { background: Highlight; color: HighlightText; }
     .siab-theme-toggle:focus-visible { outline-color: Highlight; }
   }
 </style>
@@ -94,9 +106,13 @@
   function syncButton(btn: HTMLButtonElement, state: ThemeState) {
     btn.setAttribute('data-theme-state', state);
     const label = btn.querySelector<HTMLElement>('[data-siab-theme-label]');
-    if (label) {
-      label.textContent = state === 'system' ? 'Systeem' : state === 'light' ? 'Licht' : 'Donker';
-    }
+    const currentName = state === 'system' ? 'Systeem' : state === 'light' ? 'Licht' : 'Donker';
+    const nextName = state === 'system' ? 'licht' : state === 'light' ? 'donker' : 'systeem';
+    if (label) label.textContent = currentName;
+    // State-aware label + title — surfaces the next action without needing visible text.
+    // aria-label drives screen readers; title drives desktop hover tooltip.
+    btn.setAttribute('aria-label', `Thema: ${currentName.toLowerCase()} (klik voor ${nextName})`);
+    btn.setAttribute('title', `${currentName} (klik voor ${nextName})`);
   }
 
   function cycle(state: ThemeState): ThemeState {
