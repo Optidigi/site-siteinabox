@@ -76,8 +76,9 @@ const year = new Date().getFullYear();
           <div class="footer-nav">
             <div class="fs-6 text-white mb-15">Navigatie</div>
             <ul class="footer-nav-link style-none">
-              <li><a href="#zo-werkt-het">Hoe het werkt</a></li>
-              <li><a href="#prijzen">Prijzen</a></li>
+              {/* Root-absolute: these sections live on the homepage. #faq stays page-local — FaqSection renders on every page. */}
+              <li><a href="/#zo-werkt-het">Hoe het werkt</a></li>
+              <li><a href="/#prijzen">Prijzen</a></li>
               <li><a href="#faq">Veelgestelde vragen</a></li>
             </ul>
           </div>

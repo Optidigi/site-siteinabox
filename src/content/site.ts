@@ -46,8 +46,9 @@ export const site: SiteConfig = {
     instagram: 'https://www.instagram.com/siteinabox/',
   },
   nav: [
-    { label: 'Hoe het werkt', href: '#zo-werkt-het' },
-    { label: 'Prijzen', href: '#prijzen' },
+    // Root-absolute (/#...) so these section links work from any page, not just the homepage.
+    { label: 'Hoe het werkt', href: '/#zo-werkt-het' },
+    { label: 'Prijzen', href: '/#prijzen' },
     { label: 'Contact', href: '/contact' },
   ],
 };
