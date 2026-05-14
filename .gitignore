@@ -25,6 +25,7 @@ pnpm-debug.log*
 
 # local reference / scratch files — not tracked
 reference/
+prototypes/
 
 # superpowers planning docs — local-only, not part of the published repo
 docs/superpowers/
