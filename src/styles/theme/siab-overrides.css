@@ -319,10 +319,11 @@ body{background:#ffffff;color:var(--siab-text)}
    inversion for monochrome icons that read as black on dark.
    ============================================================ */
 
-/* POPULAIR badge — text must stay #000 on yellow regardless of theme (our
-   global color:#000 → var(--siab-text) replace broke this in dark). */
-[data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended:after,
-:root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended:after{color:#000}
+/* POPULAIR badge — text must stay #000 on the yellow #ffd80b badge in BOTH
+   themes (the bundled :after rule sets color:var(--siab-text), which is white
+   in dark). Single unconditional rule — no theme scoping needed since the
+   badge is yellow in light and dark alike. */
+.font-test-familjen .pricing-section-six .pr-column.pr-column-recommended:after{color:#000}
 
 /* btn-eleven dark — final styling lives in the round-8 block below
    (transparent bg + white text + soft-white border, mirrors light's hover mechanic
