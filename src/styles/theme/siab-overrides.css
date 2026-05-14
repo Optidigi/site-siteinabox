@@ -179,11 +179,13 @@
   .font-test-familjen .theme-main-menu .nav-item .nav-link{padding-bottom:15px;border-bottom:0}
 }
 /* Overlay-nav clearance — single source of truth. The .theme-main-menu header
-   is position:absolute over the hero; its height is the logo (same clamp the
-   bundle uses) plus ~38px of chrome. Measured ~80-82px at common widths,
-   growing toward ~110px on very wide monitors. Drives hero top-padding AND
-   anchor-scroll offset so a jumped-to section never lands behind the header. */
-:root{--siab-header-h:calc(clamp(44px,3vw,72px) + 38px)}
+   is position:absolute over the hero. Its height = the logo clamp + the
+   .inner-content vertical padding clamp (both straight from the bundle) + ~14px
+   of baseline chrome. Tracks the real header across the width range — measured
+   82px @992, 80px @1440, 125px @2560. Drives the hero's top-padding AND a
+   global scroll-padding, so hash-jumped sections and keyboard-focused elements
+   (WCAG 2.4.11 Focus Not Obscured) never land behind the header. */
+:root{--siab-header-h:calc(clamp(44px,3vw,72px) + clamp(24px,1.6vw,40px) + 14px)}
 html{scroll-padding-top:calc(var(--siab-header-h) + 16px)}
 
 @media (min-width:992px) and (orientation:landscape){
@@ -586,12 +588,5 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
 [data-theme="dark"] .font-test-familjen .theme-main-menu .siab-logo img,
 [data-theme="dark"] .font-test-familjen .theme-main-menu .logo img{
   content:url(/theme/images/logo/siab_logo_dark.svg)
-}
-
-/* WCAG 2.4.11 Focus Not Obscured — when keyboard-scroll snaps a focused
-   element to the top of the viewport, leave room for the sticky header
-   (~76px logo + padding). */
-:focus-visible {
-  scroll-margin-top: 96px;
 }
 
