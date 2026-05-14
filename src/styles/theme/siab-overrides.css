@@ -108,40 +108,6 @@
     --siab-feedback-center-bg:       transparent;
     --siab-footer-bg:                #000000;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --siab-bg-page:        #3a1a30;
-      --siab-bg-surface:     #5a3a50;
-      --siab-bg-purple:      #481938;
-      --siab-bg-purple-soft: rgba(255,255,255,0.06);
-      --siab-text:           #ffffff;
-      --siab-text-muted:     rgba(255,255,255,0.7);
-      --siab-border:         #000000;
-      --siab-focus-ring:     #f5e900;
-      --siab-border-soft:    #000000;
-      --siab-shadow-color:   #000000;
-      --siab-shadow-soft:    #000000;
-      --siab-form-err:       #ff5b6f;
-      --siab-form-err-bg:    rgba(200,16,46,0.15);
-      --siab-body-bg:                  #3a1a30;
-      --siab-body-fg:                  rgba(255,255,255,0.7);
-      --siab-text-dark-util:           #ffffff;
-      --siab-border-dark-util:         #000000;
-      --siab-loginbtn-fg:              #ffffff;
-      --siab-scrollbar-track:          #2a0e22;
-      --siab-scrollbar-thumb:          rgba(255,255,255,0.3);
-      --siab-link-hover-fg:            #ffffff;
-      --siab-info-trigger-hover-fg:    #ffffff;
-      --siab-pricing-microcopy-fg:     rgba(255,255,255,0.55);
-      --siab-pricing-save-bg:          #5e224a;
-      --siab-pricing-save-fg:          #ffffff;
-      --siab-faq-divider:              rgba(255,255,255,0.1);
-      --siab-footer-card-shadow-color: #5a2b46;
-      --siab-feedback-border:          rgba(255,255,255,0.08);
-      --siab-feedback-center-bg:       rgba(255,255,255,0.08);
-      --siab-footer-bg:                #190713;
-    }
-  }
   [data-theme="dark"] {
     --siab-bg-page:        #3a1a30;
     --siab-bg-surface:     #5a3a50;
@@ -309,9 +275,6 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
    so light-mode headings on purple/dark sections (testimonial, footer)
    keep their #fff from the bundled section-specific rules. --- */
 [data-theme="dark"] .font-test-familjen :is(h1,h2,h3,h4,h5,h6){color:var(--siab-text)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen :is(h1,h2,h3,h4,h5,h6){color:var(--siab-text)}
-}
 
 
 /* Bento grid block colors — final uniform-dark treatment lives in the round-8
@@ -319,9 +282,6 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
    --siab-border-soft + solid-black --siab-shadow-soft offset shadows). */
 /* block-one heading + block-four heading are color:#000 from theme. Force light in dark. */
 [data-theme="dark"] .font-test-familjen :is(.block-feature-twentySix .block-one h3,.block-feature-twentySix .block-four h3){color:var(--siab-text)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen :is(.block-feature-twentySix .block-one h3,.block-feature-twentySix .block-four h3){color:var(--siab-text)}
-}
 
 /* --- FAQ accordion in dark: theme bundle hard-codes white containers + black
    text + black +/- icons. Mirror light's mechanic — container = page bg, items =
@@ -360,20 +320,9 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
   background:var(--siab-bg-surface);
   border-top-color:rgba(255,255,255,0.1)
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-style-two{background:var(--siab-bg-page)}
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-style-two .accordion-item{background:var(--siab-bg-surface);border-bottom:2px solid var(--siab-border)}
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button{background:var(--siab-bg-surface);color:var(--siab-text)}
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button:not(.collapsed){background:#ffd80b;color:#000}
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-button:after{filter:invert(1)}
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-body{background:var(--siab-bg-surface);border-top-color:rgba(255,255,255,0.1)}
-}
 
 /* --- Trust-trio block-feature-twentyFive border-dark + h3 + p colors in dark --- */
 [data-theme="dark"] .font-test-familjen :is(.block-feature-twentyFive .card-style-twelve h3,.block-feature-twentyFive .card-style-twelve p){color:var(--siab-text)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen :is(.block-feature-twentyFive .card-style-twelve h3,.block-feature-twentyFive .card-style-twelve p){color:var(--siab-text)}
-}
 
 /* card-style-eleven icon circle border: final styling lives in the block below
    (2px border-soft, matching light's 2px solid mechanic). */
@@ -401,10 +350,6 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
    makes it near-illegible on dark surface. Override with light muted. */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .fs-14.opacity-75,
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .info2.fs-14.opacity-75{color:rgba(255,255,255,0.55)!important}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .fs-14.opacity-75,
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .info2.fs-14.opacity-75{color:rgba(255,255,255,0.55)!important}
-}
 
 /* Pricing save-line ("Geen opstartkosten") in dark: brand purple lifted along
    the same trajectory as the page bg. Original page L≈10 → lifted to L≈16
@@ -412,30 +357,17 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
    (#481938, L≈18) → ~L≈24 → #5e224a. Keeps the +4-ish L delta over the page
    that the light-mode pill had over white, in the same brand-plum family. */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .save-line{background:#5e224a;color:#fff}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .save-line{background:#5e224a;color:#fff}
-}
 
 /* Hover states that hard-coded charcoal (#1a1a1a, #1d1d1f) — invisible on dark */
 [data-theme="dark"] .font-test-familjen .siab-see-how:hover,
 [data-theme="dark"] .font-test-familjen .theme-main-menu .login-btn-one:hover{color:#fff;text-decoration-color:#fff}
 [data-theme="dark"] .siab-info-trigger:hover,
 [data-theme="dark"] .siab-info-trigger:focus-visible{color:#fff}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .siab-see-how:hover,
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu .login-btn-one:hover{color:#fff;text-decoration-color:#fff}
-  :root:not([data-theme="light"]) .siab-info-trigger:hover,
-  :root:not([data-theme="light"]) .siab-info-trigger:focus-visible{color:#fff}
-}
 
 /* Testimonial cards — reference uses very-soft 8% white border (not opaque
    white) and highlights the centered slide with an 8% white background. */
 [data-theme="dark"] .font-test-familjen .feedback-section-nine .feedback-block{border-color:rgba(255,255,255,0.08)}
 [data-theme="dark"] .font-test-familjen .feedback-section-nine .slick-center .feedback-block{background:rgba(255,255,255,0.08)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .feedback-section-nine .feedback-block{border-color:rgba(255,255,255,0.08)}
-  :root:not([data-theme="light"]) .font-test-familjen .feedback-section-nine .slick-center .feedback-block{background:rgba(255,255,255,0.08)}
-}
 
 
 /* Removed previous filter:invert hack for icons — replaced with proper
@@ -449,17 +381,10 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
 
 /* Sticky header .fixed — match reference values exactly (was #2a0e22 / softer shadow) */
 [data-theme="dark"] .font-test-familjen .theme-main-menu.fixed{background:#2a0e22;box-shadow:0 13px 35px rgba(42,33,114,0.1);border-bottom:1px solid rgba(255,255,255,0.05)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu.fixed{background:#2a0e22;box-shadow:0 13px 35px rgba(42,33,114,0.1);border-bottom:1px solid rgba(255,255,255,0.05)}
-}
 
 /* Nav links + login button explicit #fff in dark (was getting muted via token) */
 [data-theme="dark"] .font-test-familjen .theme-main-menu .nav-item .nav-link,
 [data-theme="dark"] .font-test-familjen .theme-main-menu .login-btn-one{color:#fff}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu .nav-item .nav-link,
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu .login-btn-one{color:#fff}
-}
 
 /* btn-eleven base (used outside pricing too): in dark reference adds border 2px solid #fff.
    Our btn-eleven only appears in pricing context, so we scope to that. */
@@ -471,9 +396,6 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
 
 /* Pricing text colors: #fff in dark. Reference rules at lines 6298, 6309, 6343, 6349. */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column :is(.price,.price sub,.plane-name,.plan-tagline,.info2,.package-feature li,h6,.pricing-section-heading,.plus-header){color:#fff}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column :is(.price,.price sub,.plane-name,.plan-tagline,.info2,.package-feature li,h6,.pricing-section-heading,.plus-header){color:#fff}
-}
 
 /* btn-eleven final styling lives in the round-8 block below (no border-color or
    bg flips on hover — matches light's mechanic of shadow-shrink-only). */
@@ -493,25 +415,14 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
 [data-theme="dark"] .font-test-familjen img[src$="icon_49.svg"]{content:url(/theme/images/icon/icon_49-dark.svg)}
 [data-theme="dark"] .font-test-familjen img[src$="icon_53.svg"]{content:url(/theme/images/icon/icon_53-dark.svg)}
 [data-theme="dark"] .font-test-familjen img[src$="icon_55.svg"]{content:url(/theme/images/icon/icon_55-dark.svg)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen img[src$="icon_49.svg"]{content:url(/theme/images/icon/icon_49-dark.svg)}
-  :root:not([data-theme="light"]) .font-test-familjen img[src$="icon_53.svg"]{content:url(/theme/images/icon/icon_53-dark.svg)}
-  :root:not([data-theme="light"]) .font-test-familjen img[src$="icon_55.svg"]{content:url(/theme/images/icon/icon_55-dark.svg)}
-}
 
 /* FAQ accordion text colors in dark (the bundled rule hardcodes black body text).
    Structural styling — container/item bg, hover, etc. — lives in the round-3 block
    above and mirrors light's mechanic exactly. */
 [data-theme="dark"] .font-test-familjen .faq-section-three .accordion-body :is(p,.fs-22){color:var(--siab-text-muted)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-body :is(p,.fs-22){color:var(--siab-text-muted)}
-}
 
 /* Footer dark-version bg: reference Dark uses #190713 (deep plum), not pure black. */
 [data-theme="dark"] .font-test-familjen .footer-three.dark-version{background:#190713}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .footer-three.dark-version{background:#190713}
-}
 
 
 /* ============================================================
@@ -531,48 +442,28 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
 /* ThemeToggle: soften border to --siab-border-soft so it doesn't compete with
    primary yellow CTA next to it. Hover still snaps to brand yellow. */
 [data-theme="dark"] .siab-theme-toggle{border-color:var(--siab-border-soft)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .siab-theme-toggle{border-color:var(--siab-border-soft)}
-}
 
 /* siab-info-card on /contact in dark: same 2px border + 5px 5px offset as light;
    only border-color softens to match the rest of the dark border system. */
 [data-theme="dark"] .siab-info-card{border-color:var(--siab-border-soft);box-shadow:5px 5px var(--siab-shadow-soft)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .siab-info-card{border-color:var(--siab-border-soft);box-shadow:5px 5px var(--siab-shadow-soft)}
-}
 
 /* Form select chevron — hardcoded black SVG data-URI in ContactForm.astro.
    Swap to a white-stroked version in dark mode. */
 html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1l5 5 5-5'/></svg>")}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .siab-field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1l5 5 5-5'/></svg>")}
-}
 
 /* Mobile nav drawer in dark — theme bundle hard-codes background:#fff at <=991px.
    Full-screen white flashbang on mobile when toggled. */
 @media (max-width:991px){
   [data-theme="dark"] .font-test-familjen .navbar-collapse{background-color:#2a0e22;border-right:1px solid rgba(255,255,255,0.08)}
 }
-@media (max-width:991px) and (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .navbar-collapse{background-color:#2a0e22;border-right:1px solid rgba(255,255,255,0.08)}
-}
 
 /* Native scrollbar (webkit) — theme bundle hard-codes white track + black thumb. */
 [data-theme="dark"] ::-webkit-scrollbar-track{background:#2a0e22}
 [data-theme="dark"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.3)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) ::-webkit-scrollbar-track{background:#2a0e22}
-  :root:not([data-theme="light"]) ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.3)}
-}
 
 /* Token hygiene — align footer-nav-link hover to the yellow accent token */
 [data-theme="dark"] .font-test-familjen .footer-three.dark-version .footer-nav-link a:hover,
 [data-theme="dark"] .font-test-familjen .footer-three.dark-version .social-icon li a:hover{color:var(--siab-accent-yellow)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .footer-three.dark-version .footer-nav-link a:hover,
-  :root:not([data-theme="light"]) .font-test-familjen .footer-three.dark-version .social-icon li a:hover{color:var(--siab-accent-yellow)}
-}
 
 /* ThemeToggle: aria-live announcement for screen readers */
 /* (label updates handled via JS in component; aria-live="polite" added to the span). */
@@ -595,20 +486,11 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
 [data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-circle img[src*="tabler-tools"],
 [data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-circle img[src*="tabler-adjustments-horizontal"],
 [data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-circle img[src*="tabler-shield-check"]{content:normal;filter:invert(1)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-circle img[src*="tabler-tools"],
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-circle img[src*="tabler-adjustments-horizontal"],
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-circle img[src*="tabler-shield-check"]{content:normal;filter:invert(1)}
-}
 
 /* Promise-card icon circle in dark: keep light's 2px border (using soft-white token
    so it matches the rest of the dark border treatment). */
 [data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-circle{border:2px solid var(--siab-border-soft);width:55px;height:55px}
 [data-theme="dark"] .font-test-familjen .card-style-eleven .card-icon-circle img{width:28px;height:28px}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-circle{border:2px solid var(--siab-border-soft);width:55px;height:55px}
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-eleven .card-icon-circle img{width:28px;height:28px}
-}
 
 /* --- Trust trio in dark: mirrors reference Dark icon_50/51/52 structure exactly.
    In the reference's dark SVG, the foreground circle becomes "dark-plum fill with
@@ -624,20 +506,10 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
 [data-theme="dark"] .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-yellow:after{border:2px solid #f5e900}
 [data-theme="dark"] .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-green:after{border:2px solid #00c592}
 [data-theme="dark"] .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-orange:after{border:2px solid #f96a00}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve:after{background:var(--siab-bg-page);box-sizing:border-box}
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-yellow:after{border:2px solid #f5e900}
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-green:after{border:2px solid #00c592}
-  :root:not([data-theme="light"]) .font-test-familjen .card-style-twelve .card-icon-circle-twelve.card-icon-orange:after{border:2px solid #f96a00}
-}
 
 /* --- Pricing checkmark (tabler-check.svg via :before content url): invert to white in dark --- */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .package-feature li:before{filter:invert(1)}
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .package-feature li.optional:before{filter:invert(1)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .package-feature li:before{filter:invert(1)}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .package-feature li.optional:before{filter:invert(1)}
-}
 
 /* --- Pricing tabs: final active-state styling lives in the round-7/8 blocks below
    (yellow bg + tactile inset shadow for press-down feel). --- */
@@ -663,40 +535,16 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
   border:2px solid var(--siab-border-soft);
   box-shadow:5px 5px var(--siab-shadow-soft)
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .hero-cards-strip .card-style-eleven,
-  :root:not([data-theme="light"]) .font-test-familjen .block-feature-twentyFour .card-style-eleven{
-    background:#5a3a50;
-    border:2px solid var(--siab-border-soft);
-    box-shadow:5px 5px var(--siab-shadow-soft)
-  }
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column{
-    background:transparent;
-    border:2px solid var(--siab-border-soft);
-    box-shadow:6px 6px var(--siab-shadow-soft)
-  }
-  :root:not([data-theme="light"]) .font-test-familjen .faq-section-three .accordion-style-two{
-    border:2px solid var(--siab-border-soft);
-    box-shadow:5px 5px var(--siab-shadow-soft)
-  }
-}
 
 /* Update pricing column border to use the softer token too */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column h6,
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .pricing-section-heading{border-bottom-color:var(--siab-border-soft)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column h6,
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .pricing-section-heading{border-bottom-color:var(--siab-border-soft)}
-}
 
 /* --- REVERT hero illustration dark override. Our Lottie has a different layout
    (flex-positioned absolute fill of the column, not a reference-style fixed-position
    <img>). The override I added shrunk the rocket. Cancel it. --- */
 @media (width>=992px){
   [data-theme="dark"] .font-test-familjen .hero-banner-nine .illustration{top:0;max-width:none;width:calc(100% + max(0px,50vw - 775px - clamp(12px,1.7vw,24px)));z-index:0;aspect-ratio:auto;transform:none;align-items:center;justify-content:flex-start}
-}
-@media (width>=992px) and (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .hero-banner-nine .illustration{top:0;max-width:none;width:calc(100% + max(0px,50vw - 775px - clamp(12px,1.7vw,24px)));z-index:0;aspect-ratio:auto;transform:none;align-items:center;justify-content:flex-start}
 }
 
 /* ============================================================
@@ -737,17 +585,10 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
   transform:translate(1px,1px);
   box-shadow:3px 3px var(--siab-shadow-soft)
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .block-feature-twentySix :is(.block-one,.block-two,.block-three,.block-four){background:rgba(255,255,255,0.07);border:2px solid var(--siab-border-soft);box-shadow:4px 4px var(--siab-shadow-soft)}
-  :root:not([data-theme="light"]) .font-test-familjen .block-feature-twentySix :is(.block-one,.block-two,.block-three,.block-four):hover{transform:translate(1px,1px);box-shadow:3px 3px var(--siab-shadow-soft)}
-}
 
 /* block-three text now needs to follow the dark text flippers (its bg flipped
    from light-blue to dark). Cancel the earlier black-text protection. */
 [data-theme="dark"] .font-test-familjen .block-feature-twentySix .block-three :is(h3,blockquote,.text-dark,.color-dark){color:var(--siab-text)!important}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .block-feature-twentySix .block-three :is(h3,blockquote,.text-dark,.color-dark){color:var(--siab-text)!important}
-}
 
 /* Pricing toggle — raised/lowered tactile per the brutalist mechanic (Section 3
    of the design proposal). Inactive = plum surface raised, active = yellow at-rest. */
@@ -755,12 +596,6 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
 [data-theme="dark"] .font-test-familjen .pricing-nav-four .nav-link{background:#5a3a50;color:#fff;border-right:2px solid var(--siab-border-soft);transform:translateY(-3px);box-shadow:0 3px var(--siab-shadow-soft)}
 [data-theme="dark"] .font-test-familjen .pricing-nav-four .nav-link:not(.active):hover{transform:translateY(-1px);box-shadow:0 1px var(--siab-shadow-soft)}
 [data-theme="dark"] .font-test-familjen .pricing-nav-four .nav-link.active{background:#f5e900;color:#000;transform:translateY(0);box-shadow:inset 0 3px #00000073}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-nav-four .nav-tabs{border:2px solid var(--siab-border-soft)}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-nav-four .nav-link{background:#5a3a50;color:#fff;border-right:2px solid var(--siab-border-soft);transform:translateY(-3px);box-shadow:0 3px var(--siab-shadow-soft)}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-nav-four .nav-link:not(.active):hover{transform:translateY(-1px);box-shadow:0 1px var(--siab-shadow-soft)}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-nav-four .nav-link.active{background:#f5e900;color:#000;transform:translateY(0);box-shadow:inset 0 3px #00000073}
-}
 
 /* Pricing CTA (.btn-eleven) — transparent shell + soft-white border + black
    shadow. Hover snaps to yellow with press-down translate. */
@@ -769,18 +604,10 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .btn-eleven{background:rgba(255,255,255,0.08);color:#fff;border:2px solid var(--siab-border-soft);box-shadow:4px 4px var(--siab-shadow-soft)}
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .btn-eleven:hover{transform:translate(2px,2px);box-shadow:2px 2px var(--siab-shadow-soft)}
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .btn-eleven:active{transform:translate(4px,4px);box-shadow:0 0 var(--siab-shadow-soft)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .btn-eleven{background:rgba(255,255,255,0.08);color:#fff;border:2px solid var(--siab-border-soft);box-shadow:4px 4px var(--siab-shadow-soft)}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .btn-eleven:hover{transform:translate(2px,2px);box-shadow:2px 2px var(--siab-shadow-soft)}
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column .btn-eleven:active{transform:translate(4px,4px);box-shadow:0 0 var(--siab-shadow-soft)}
-}
 
 /* .pr-column-recommended (POPULAIR card) gets a bigger offset shadow per the
    theme's intent (was box-shadow: 10px 10px in light). Override in dark. */
 [data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended{box-shadow:10px 10px var(--siab-shadow-soft)}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .pricing-section-six .pr-column.pr-column-recommended{box-shadow:10px 10px var(--siab-shadow-soft)}
-}
 
 /* Footer cards in DARK only: the always-dark footer is even darker than the lifted
    page bg, so a solid #000 shadow there has no luminance headroom — use lighter plum.
@@ -788,10 +615,6 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
    original design and reads fine on the black footer bg. */
 [data-theme="dark"] .font-test-familjen .footer-three.dark-version .address-wrapper .block{box-shadow:4px 4px #5a2b46}
 [data-theme="dark"] .font-test-familjen .footer-three.dark-version .address-wrapper .block:hover{box-shadow:2px 2px #5a2b46}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .footer-three.dark-version .address-wrapper .block{box-shadow:4px 4px #5a2b46}
-  :root:not([data-theme="light"]) .font-test-familjen .footer-three.dark-version .address-wrapper .block:hover{box-shadow:2px 2px #5a2b46}
-}
 
 /* Hero promise cards (.card-style-eleven in both .hero-cards-strip and
    .block-feature-twentyFour) get the same press-down hover as the bento blocks:
@@ -825,12 +648,6 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
 [data-theme="dark"] .font-test-familjen .theme-main-menu .siab-logo img,
 [data-theme="dark"] .font-test-familjen .theme-main-menu .logo img{
   content:url(/theme/images/logo/siab_logo_dark.svg)
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu .siab-logo img,
-  :root:not([data-theme="light"]) .font-test-familjen .theme-main-menu .logo img{
-    content:url(/theme/images/logo/siab_logo_dark.svg)
-  }
 }
 
 /* WCAG 2.4.11 Focus Not Obscured — when keyboard-scroll snaps a focused
