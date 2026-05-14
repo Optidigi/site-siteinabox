@@ -337,16 +337,11 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
 
 /* Pricing tab .nav-link.active — final tactile inset shadow lives in round-8 block */
 
-/* Pricing save-line ("Geen opstartkosten") in dark: brand purple lifted along
-   the same trajectory as the page bg. Original page L≈10 → lifted to L≈16
-   (+6 delta); apply the same +6 to the original brand-purple save-line bg
-   (#481938, L≈18) → ~L≈24 → #5e224a. Keeps the +4-ish L delta over the page
-   that the light-mode pill had over white, in the same brand-plum family. */
-[data-theme="dark"] .font-test-familjen .pricing-section-six .pr-column .save-line{background:#5e224a;color:#fff}
+.font-test-familjen .pricing-section-six .pr-column .save-line{background:var(--siab-pricing-save-bg);color:var(--siab-pricing-save-fg)}
 
 /* Testimonial cards — reference uses very-soft 8% white border (not opaque
    white) and highlights the centered slide with an 8% white background. */
-[data-theme="dark"] .font-test-familjen .feedback-section-nine .slick-center .feedback-block{background:rgba(255,255,255,0.08)}
+.font-test-familjen .feedback-section-nine .slick-center .feedback-block{background:var(--siab-feedback-center-bg)}
 
 
 /* Removed previous filter:invert hack for icons — replaced with proper
@@ -396,8 +391,8 @@ body{background:var(--siab-body-bg);color:var(--siab-body-fg)}
    above and mirrors light's mechanic exactly. */
 [data-theme="dark"] .font-test-familjen .faq-section-three .accordion-body :is(p,.fs-22){color:var(--siab-text-muted)}
 
-/* Footer dark-version bg: reference Dark uses #190713 (deep plum), not pure black. */
-[data-theme="dark"] .font-test-familjen .footer-three.dark-version{background:#190713}
+/* Footer dark-version bg: token resolves to #190713 in dark, #000 in light (matches bundle). */
+.font-test-familjen .footer-three.dark-version{background:var(--siab-footer-bg)}
 
 
 /* ============================================================
@@ -424,9 +419,10 @@ html[data-theme="dark"] .font-test-familjen .siab-field select{background-image:
   [data-theme="dark"] .font-test-familjen .navbar-collapse{background-color:#2a0e22;border-right:1px solid rgba(255,255,255,0.08)}
 }
 
-/* Native scrollbar (webkit) — theme bundle hard-codes white track + black thumb. */
-[data-theme="dark"] ::-webkit-scrollbar-track{background:#2a0e22}
-[data-theme="dark"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.3)}
+/* Native scrollbar (webkit) — token resolves to #2a0e22/rgba(255,255,255,0.3) in dark,
+   #fff/#000 in light (matches bundle). */
+::-webkit-scrollbar-track{background:var(--siab-scrollbar-track)}
+::-webkit-scrollbar-thumb{background:var(--siab-scrollbar-thumb)}
 
 /* Token hygiene — align footer-nav-link hover to the yellow accent token */
 [data-theme="dark"] .font-test-familjen .footer-three.dark-version .footer-nav-link a:hover,
