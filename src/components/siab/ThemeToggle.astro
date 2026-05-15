@@ -111,7 +111,10 @@
     btn.setAttribute('data-theme-state', state);
     const label = btn.querySelector<HTMLElement>('[data-siab-theme-label]');
     const currentName = state === 'system' ? 'Systeem' : state === 'light' ? 'Licht' : 'Donker';
-    const nextName = state === 'system' ? 'licht' : state === 'light' ? 'donker' : 'systeem';
+    // The next click always flips to the opposite of what's currently RENDERED
+    // (not the next entry in a fixed cycle), so the button never feels like a no-op
+    // — e.g. a System+OS-light user clicking "Light" used to do nothing visible.
+    const nextName = document.documentElement.getAttribute('data-theme') === 'dark' ? 'licht' : 'donker';
     if (label) label.textContent = currentName;
     // State-aware label + title — surfaces the next action without needing visible text.
     // aria-label drives screen readers; title drives desktop hover tooltip.
@@ -119,15 +122,17 @@
     btn.setAttribute('title', `${currentName} (klik voor ${nextName})`);
   }
 
-  function cycle(state: ThemeState): ThemeState {
-    return state === 'system' ? 'light' : state === 'light' ? 'dark' : 'system';
+  function nextChoice(): 'light' | 'dark' {
+    // Opposite of the currently-rendered theme — guarantees every click is visible,
+    // regardless of where the user is in the System/Light/Dark space.
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   }
 
   document.querySelectorAll<HTMLButtonElement>('[data-siab-theme-toggle]').forEach((btn) => {
     syncButton(btn, readState());
 
     btn.addEventListener('click', () => {
-      const upcoming = cycle(readState());
+      const upcoming = nextChoice();
       const apply = () => { applyState(upcoming); syncButton(btn, upcoming); };
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       // Progressive enhancement: View Transitions API for a smooth crossfade.
